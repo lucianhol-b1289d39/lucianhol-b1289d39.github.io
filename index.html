@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鉴黄师呜呜呜 - 内容审核指南与案例</title>
+<meta name="description" content="鉴黄师呜呜呜页面，汇集网络内容审核的实用指南与案例库。提供违规内容识别、审核流程解析、平台规则解读、真实案例分析等具体内容，适合内容安全从业者与平台运营者参考。">
+<meta name="keywords" content="内容审核,违规识别,平台规则,审核案例,安全指南">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232d3b4e'/%3E%3Ccircle cx='16' cy='14' r='5' fill='none' stroke='%23e8b04b' stroke-width='2'/%3E%3Cpath d='M10 22c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='%23e8b04b' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #f5f3ef;
+  --surface: #ffffff;
+  --surface-alt: #f9f7f4;
+  --ink: #1e2a3a;
+  --ink-secondary: #4a5568;
+  --ink-muted: #7b8794;
+  --primary: #2d3b4e;
+  --primary-light: #3d4f66;
+  --accent: #c8842c;
+  --accent-light: #e8b04b;
+  --accent-bg: #fdf6ec;
+  --border: #e2ddd6;
+  --border-light: #ece8e2;
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+  --shadow-s: 0 1px 3px rgba(30,42,58,0.08);
+  --shadow-m: 0 4px 12px rgba(30,42,58,0.1);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --sticky-h: 96px;
+  --max-w: 1320px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--sticky-h); }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { color: var(--accent); }
+
+img { display: block; max-width: 100%; height: auto; }
+
+/* ===== Sticky wrapper ===== */
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ===== Announcement ===== */
+.announcement {
+  background: var(--primary);
+  color: #e8e4de;
+  font-size: 13px;
+  padding: 8px 0;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+.announcement strong { color: var(--accent-light); }
+
+/* ===== Header ===== */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-s);
+}
+.header-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 64px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.brand svg { width: 34px; height: 34px; }
+.brand-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.main-nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.main-nav a {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: var(--radius-s);
+  color: var(--ink-secondary);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.main-nav a:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--surface-alt);
+}
+.search-box input {
+  border: none;
+  background: transparent;
+  padding: 7px 14px;
+  font-size: 13px;
+  width: 160px;
+  outline: none;
+  font-family: var(--font);
+  color: var(--ink);
+}
+.search-box input::placeholder { color: var(--ink-muted); }
+.search-box button {
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  padding: 7px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--font);
+}
+.search-box button:hover { background: var(--primary-light); }
+
+/* ===== Hero ===== */
+.hero {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 40px 24px 32px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  align-items: center;
+}
+.hero-text h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.25;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.hero-text .hero-desc {
+  font-size: 15px;
+  color: var(--ink-secondary);
+  line-height: 1.8;
+  max-width: 560px;
+  margin-bottom: 24px;
+}
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: var(--radius-s);
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font);
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: #b07222; color: #fff; }
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-visual svg {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+/* ===== Main Layout: 3-column ===== */
+.main-layout {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  display: grid;
+  grid-template-columns: 180px 1fr 260px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ===== Channel Sidebar ===== */
+.channel-sidebar {
+  position: sticky;
+  top: calc(var(--sticky-h) + 16px);
+}
+.channel-sidebar h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.channel-list { list-style: none; }
+.channel-list li { margin-bottom: 2px; }
+.channel-list a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: var(--radius-s);
+  font-size: 14px;
+  color: var(--ink-secondary);
+  transition: all 0.15s;
+}
+.channel-list a:hover,
+.channel-list a.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ===== Content Column ===== */
+.content-col { min-width: 0; }
+
+.section {
+  background: var(--surface);
+  border-radius: var(--radius-m);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-s);
+  border: 1px solid var(--border-light);
+}
+.section h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+.section .section-desc {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 20px 0 8px;
+}
+
+/* ===== Overview ===== */
+.overview-text p {
+  margin-bottom: 14px;
+  color: var(--ink-secondary);
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+.overview-text p:last-child { margin-bottom: 0; }
+
+/* ===== Card Grid ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.card {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.15s;
+  background: var(--surface);
+}
+.card:hover {
+  box-shadow: var(--shadow-m);
+  transform: translateY(-2px);
+}
+.card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  background: var(--surface-alt);
+}
+.card-body { padding: 14px 16px; }
+.card-body .card-tag {
+  display: inline-block;
+  font-size: 11px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.card-body h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.card-body .card-desc {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+.card-meta span { display: flex; align-items: center; gap: 3px; }
+
+/* ===== Update List ===== */
+.update-list { list-style: none; }
+.update-list li {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+  align-items: baseline;
+}
+.update-list li:last-child { border-bottom: none; }
+.update-list .update-time {
+  font-size: 12px;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  min-width: 64px;
+  flex-shrink: 0;
+}
+.update-list .update-title {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 14px;
+}
+.update-list .update-summary {
+  color: var(--ink-secondary);
+  font-size: 13px;
+}
+
+/* ===== Category Grid ===== */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 8px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-s);
+  font-size: 13px;
+  color: var(--ink-secondary);
+  text-align: center;
+  transition: all 0.15s;
+  font-weight: 500;
+  cursor: pointer;
+}
+.category-item:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* ===== Deep Article ===== */
+.article-body p {
+  margin-bottom: 14px;
+  color: var(--ink-secondary);
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+.article-body ul, .article-body ol {
+  margin: 0 0 16px 20px;
+  color: var(--ink-secondary);
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+.article-body li { margin-bottom: 6px; }
+.article-body strong { color: var(--ink); }
+
+/* ===== Guide Steps ===== */
+.guide-steps { counter-reset: step; list-style: none; margin: 0; }
+.guide-steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 14px 0 14px 48px;
+  border-bottom: 1px solid var(--border-light);
+}
+.guide-steps li:last-child { border-bottom: none; }
+.guide-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.guide-steps li strong {
+  display: block;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.guide-steps li p {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ===== FAQ ===== */
+.faq-list details {
+  border-bottom: 1px solid var(--border-light);
+  padding: 12px 0;
+}
+.faq-list details:last-child { border-bottom: none; }
+.faq-list summary {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::before {
+  content: "＋";
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 15px;
+  width: 20px;
+  flex-shrink: 0;
+}
+.faq-list details[open] summary::before { content: "－"; }
+.faq-list .faq-answer {
+  padding: 10px 0 4px 28px;
+  font-size: 14px;
+  color: var(--ink-secondary);
+  line-height: 1.75;
+}
+
+/* ===== Comments ===== */
+.comment-list { list-style: none; }
+.comment-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.comment-item:last-child { border-bottom: none; }
+.comment-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  border: 1px solid var(--border-light);
+}
+.comment-content { flex: 1; min-width: 0; }
+.comment-content .comment-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.comment-content .comment-text {
+  font-size: 13.5px;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+}
+.comment-content .comment-time {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+
+/* ===== News ===== */
+.news-list { list-style: none; }
+.news-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.news-item:last-child { border-bottom: none; }
+.news-item h4 {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.news-item h4 a { color: var(--ink); }
+.news-item h4 a:hover { color: var(--accent); }
+.news-item .news-date {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+.news-item .news-summary {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+}
+
+/* ===== Related Tags ===== */
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag-cloud a {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--ink-secondary);
+  transition: all 0.15s;
+}
+.tag-cloud a:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ===== Ranking ===== */
+.ranking-list { list-style: none; counter-reset: rank; }
+.ranking-list li {
+  counter-increment: rank;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.ranking-list li:last-child { border-bottom: none; }
+.ranking-list li::before {
+  content: counter(rank);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent);
+  min-width: 22px;
+  flex-shrink: 0;
+}
+.ranking-list li:nth-child(-n+3)::before { color: #d4941e; }
+.ranking-list .rank-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+.ranking-list .rank-info { font-size: 12px; color: var(--ink-muted); margin-left: auto; white-space: nowrap; }
+
+/* ===== Aside ===== */
+.aside-col { min-width: 0; }
+.aside-card {
+  background: var(--surface);
+  border-radius: var(--radius-m);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-s);
+  border: 1px solid var(--border-light);
+}
+.aside-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+.aside-card .aside-list { list-style: none; }
+.aside-card .aside-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+.aside-card .aside-list li:last-child { border-bottom: none; }
+.aside-card .aside-list a { color: var(--ink-secondary); }
+.aside-card .aside-list a:hover { color: var(--accent); }
+.aside-card .aside-list .aside-meta {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--primary);
+  color: #b8c4d0;
+  padding: 48px 24px 24px;
+  margin-top: 24px;
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 32px;
+}
+.footer-brand .footer-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.footer-brand p {
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 300px;
+}
+.footer-col h4 {
+  color: #e8e4de;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 6px; }
+.footer-col ul a {
+  color: #9aa8b8;
+  font-size: 13px;
+}
+.footer-col ul a:hover { color: var(--accent-light); }
+.footer-bottom {
+  max-width: var(--max-w);
+  margin: 32px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+  color: #7a8898;
+  text-align: center;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 1fr 240px;
+  }
+  .channel-sidebar { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 24px; }
+  .hero-visual { order: -1; max-width: 320px; }
+  .header-inner { gap: 16px; }
+  .main-nav { display: none; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 740px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+    padding: 0 16px 32px;
+  }
+  .aside-col { order: 2; }
+  .content-col { order: 1; }
+  .hero { padding: 24px 16px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+  .section { padding: 20px 18px; }
+  .header-inner { padding: 0 16px; height: 56px; }
+  .brand-text { font-size: 17px; }
+  .search-box input { width: 100px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+  .update-list li { flex-wrap: wrap; gap: 4px; }
+  .update-list .update-time { min-width: auto; }
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<!-- Sticky wrapper: announcement + header -->
+<div class="sticky-wrapper">
+  <div class="announcement">
+    <strong>本周新增</strong> 12 条审核案例档案 · <strong>11 月 8 日</strong> 更新：直播场景违规识别要点
+  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="brand" aria-label="鉴黄师呜呜呜 首页">
+        <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="34" height="34" rx="9" fill="#2d3b4e"/>
+          <circle cx="17" cy="14" r="5.5" fill="none" stroke="#e8b04b" stroke-width="2.2"/>
+          <path d="M10 24c0-3.9 3.1-7 7-7s7 3.1 7 7" fill="none" stroke="#e8b04b" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="17" cy="14" r="1.8" fill="#e8b04b"/>
+        </svg>
+        <span class="brand-text">鉴黄师呜呜呜</span>
+      </a>
+      <nav class="main-nav" aria-label="主题导航">
+        <a href="/#overview">领域概览</a>
+        <a href="/#picks">精选案例</a>
+        <a href="/#updates">最新动态</a>
+        <a href="/#categories">分类索引</a>
+        <a href="/#deepdive">深度解析</a>
+        <a href="/#guide">实操指南</a>
+        <a href="/#faq">常见问题</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索案例或规则…" aria-label="搜索案例或规则">
+          <button type="button" id="searchBtn" aria-label="搜索">搜索</button>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-text">
+    <h1>鉴黄师呜呜呜</h1>
+    <p class="hero-desc">
+      汇聚网络内容审核领域的实战案例、平台规则解读与违规识别技巧。从图文、短视频到直播场景，提供可对照的判定依据与操作流程参考，适合内容安全从业者、平台运营与审核团队日常查阅。
+    </p>
+    <div class="hero-cta">
+      <a href="/#picks" class="btn btn-primary">浏览案例库</a>
+      <a href="/#guide" class="btn btn-outline">审核流程指南</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="内容审核主题视觉：盾牌与放大镜组合图形">
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#2d3b4e;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#3d4f66;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#e8b04b;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#c8842c;stop-opacity:1"/>
+        </linearGradient>
+      </defs>
+      <!-- Background shape -->
+      <ellipse cx="190" cy="160" rx="150" ry="120" fill="#f0ebe4" opacity="0.6"/>
+      <!-- Shield -->
+      <path d="M190 40 L250 70 L250 140 C250 190 220 220 190 235 C160 220 130 190 130 140 L130 70 Z" fill="url(#grad1)" stroke="#1e2a3a" stroke-width="2"/>
+      <!-- Shield inner -->
+      <path d="M190 60 L235 82 L235 138 C235 178 212 203 190 215 C168 203 145 178 145 138 L145 82 Z" fill="none" stroke="#e8b04b" stroke-width="1.5" opacity="0.6"/>
+      <!-- Magnifying glass -->
+      <circle cx="220" cy="170" r="38" fill="none" stroke="url(#grad2)" stroke-width="5"/>
+      <line x1="247" y1="197" x2="278" y2="228" stroke="url(#grad2)" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="220" cy="170" r="30" fill="#e8b04b" opacity="0.08"/>
+      <!-- Checkmark inside glass -->
+      <path d="M206 170 L216 180 L236 158" fill="none" stroke="#c8842c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Small dots -->
+      <circle cx="100" cy="90" r="4" fill="#e8b04b" opacity="0.4"/>
+      <circle cx="280" cy="60" r="3" fill="#c8842c" opacity="0.3"/>
+      <circle cx="90" cy="220" r="3" fill="#2d3b4e" opacity="0.15"/>
+      <circle cx="300" cy="240" r="5" fill="#e8b04b" opacity="0.25"/>
+      <!-- Lines -->
+      <line x1="60" y1="150" x2="100" y2="150" stroke="#e8b04b" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+      <line x1="280" y1="120" x2="320" y2="120" stroke="#c8842c" stroke-width="2" opacity="0.3" stroke-linecap="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Main 3-column layout -->
+<div class="main-layout">
+
+  <!-- Left channel sidebar -->
+  <aside class="channel-sidebar" aria-label="频道索引">
+    <h3>频道索引</h3>
+    <ul class="channel-list">
+      <li><a href="/#overview">领域概览</a></li>
+      <li><a href="/#picks" class="active">精选案例</a></li>
+      <li><a href="/#updates">最新动态</a></li>
+      <li><a href="/#categories">分类索引</a></li>
+      <li><a href="/#deepdive">深度解析</a></li>
+      <li><a href="/#guide">实操指南</a></li>
+      <li><a href="/#faq">常见问题</a></li>
+      <li><a href="/#comments">从业者讨论</a></li>
+      <li><a href="/#news">相关资讯</a></li>
+      <li><a href="/#related">延伸方向</a></li>
+      <li><a href="/#ranking">案例热度榜</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main content column -->
+  <main class="content-col">
+
+    <!-- Section 1: Overview -->
+    <section class="section" id="overview">
+      <h2>内容审核领域概览</h2>
+      <p class="section-desc">了解鉴黄师呜呜呜所涉及的内容安全审核方向与当前值得关注的具体内容。</p>
+      <div class="overview-text">
+        <p>
+          内容审核行业在 2026 年已发展出高度细分的岗位体系。鉴黄师呜呜呜所指向的领域，涵盖图文审核、短视频审核、直播实时监控、语音内容识别四大方向。每个方向对违规内容的判定尺度不同：图文审核侧重静态画面的暴露程度与暗示性构图；短视频审核需要结合上下文动作与场景连贯性；直播实时监控要求 3 秒内完成截图判定与处置；语音内容识别则聚焦色情暗示话术与低俗互动。
+        </p>
+        <p>
+          当前行业值得关注的具体趋势包括：AI 预审与人工复核的协作边界进一步明确，平台对“软色情”的判定标准从画面暴露度转向“整体性暗示意图”，未成年人保护场景的审核优先级持续提升。同时，各平台在 2026 年三季度密集更新了违规内容分类细则，例如抖音在 9 月新增了“AI 生成擦边内容”专项类目，快手在 10 月调整了直播连麦场景的判定阈值。
+        </p>
+        <p>
+          从从业者角度看，审核标准的地域差异与平台差异仍然显著。同一张图片在社交平台可能被判定为正常穿搭分享，而在直播场景中则可能触发预警。理解这些差异需要持续跟踪各平台的规则更新与典型案例通报，这也是鉴黄师呜呜呜页面持续整理的内容方向。
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 2: Picks -->
+    <section class="section" id="picks">
+      <h2>精选审核案例与判定参考</h2>
+      <p class="section-desc">从近期案例库中选取的典型场景，附带判定要点与处置参考。</p>
+      <div class="card-grid">
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/shenhe-anli01/400/300" width="400" height="300" loading="lazy" alt="深夜直播连麦场景审核截图示意">
+          <div class="card-body">
+            <span class="card-tag">直播审核</span>
+            <h4>深夜连麦场景的擦边话术识别</h4>
+            <p class="card-desc">主播通过隐晦话术引导观众刷礼物，画面无暴露但语音内容涉及性暗示。判定关键在于连续 3 句以上引导性话术与礼物目标挂钩。</p>
+            <div class="card-meta">
+              <span>🔥 热度 9.2</span>
+              <span>📋 案例编号 A-20261103</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/shenhe-anli02/400/300" width="400" height="300" loading="lazy" alt="AI生成擦边图片样本比对示意">
+          <div class="card-body">
+            <span class="card-tag">AI 内容</span>
+            <h4>AI 生成擦边图的特征比对方法</h4>
+            <p class="card-desc">针对 2026 年 9 月新增的 AI 擦边类目，整理出皮肤纹理异常、光影逻辑矛盾、手部指节畸变三类识别特征，配合平台专项审核规则使用。</p>
+            <div class="card-meta">
+              <span>🔥 热度 8.7</span>
+              <span>📋 案例编号 A-20261028</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/shenhe-anli03/400/300" width="400" height="300" loading="lazy" alt="短视频换装片段关键帧截取示意">
+          <div class="card-body">
+            <span class="card-tag">短视频审核</span>
+            <h4>换装类短视频的关键帧截取规则</h4>
+            <p class="card-desc">换装过场动画中 0.5 秒的暴露画面是否构成违规，取决于截取帧率与平台阈值。整理主流平台对瞬时暴露的判定差异与处置建议。</p>
+            <div class="card-meta">
+              <span>🔥 热度 8.5</span>
+              <span>📋 案例编号 A-20261021</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/shenhe-anli04/400/300" width="400" height="300" loading="lazy" alt="图文社区暗示性构图案例封面">
+          <div class="card-body">
+            <span class="card-tag">图文审核</span>
+            <h4>暗示性构图与正常穿搭的边界案例</h4>
+            <p class="card-desc">同款服装在生活场景与刻意摆拍场景下的判定结论不同。整理出背景元素、拍摄角度、肢体语言三项辅助判断维度，避免误判正常内容。</p>
+            <div class="card-meta">
+              <span>🔥 热度 8.3</span>
+              <span>📋 案例编号 A-20261015</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/shenhe-anli05/400/300" width="400" height="300" loading="lazy" alt="语音房低俗互动审核界面示意">
+          <div class="card-body">
+            <span class="card-tag">语音审核</span>
+            <h4>语音房低俗互动话术的语义分级</h4>
+            <p class="card-desc">将语音房内常见互动话术按暗示程度分为三级：直接违规、需结合上下文判断、正常社交用语。附 18 条典型话术对照表。</p>
+            <div class="card-meta">
+              <span>🔥 热度 8.0</span>
+              <span>📋 案例编号 A-20261008</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/shenhe-anli06/400/300" width="400" height="300" loading="lazy" alt="未成年人模式审核拦截界面示意">
+          <div class="card-body">
+            <span class="card-tag">未成年人保护</span>
+            <h4>青少年模式下软色情内容的拦截逻辑</h4>
+            <p class="card-desc">青少年模式对边缘内容的拦截阈值显著低于普通模式。整理出 2026 年各平台在青少年模式下的额外判定规则与误拦截申诉流程。</p>
+            <div class="card-meta">
+              <span>🔥 热度 7.9</span>
+              <span>📋 案例编号 A-20260930</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Updates -->
+    <section class="section" id="updates">
+      <h2>最新审核动态与规则更新</h2>
+      <p class="section-desc">2026 年 10 月至 11 月期间各平台规则调整与典型案例通报。</p>
+      <ul class="update-list">
+        <li>
+          <span class="update-time">11-08 09:30</span>
+          <span><span class="update-title">抖音新增“AI 生成擦边内容”专项类目</span> <span class="update-summary">— 要求审核员对疑似 AI 生成的暴露画面优先标记，系统自动关联生成源追溯。</span></span>
+        </li>
+        <li>
+          <span class="update-time">11-07 16:00</span>
+          <span><span class="update-title">快手调整直播连麦判定阈值</span> <span class="update-summary">— 连麦双方同时出现暴露画面时，判定等级从 B 类上调至 A 类。</span></span>
+        </li>
+        <li>
+          <span class="update-time">11-05 11:20</span>
+          <span><span class="update-title">B 站发布 Q3 内容安全报告</span> <span class="update-summary">— 软色情类违规投稿环比下降 12%，AI 辅助审核覆盖率提升至 78%。</span></span>
+        </li>
+        <li>
+          <span class="update-time">11-03 14:45</span>
+          <span><span class="update-title">微信视频号更新换装类内容细则</span> <span class="update-summary">— 明确换装动画中超过 0.3 秒的暴露画面按违规处理，新增 5 个示例。</span></span>
+        </li>
+        <li>
+          <span class="update-time">10-30 10:00</span>
+          <span><span class="update-title">小红书上线“穿搭内容辅助判定”工具</span> <span class="update-summary">— 审核员可通过场景标签快速区分生活分享与刻意擦边。</span></span>
+        </li>
+        <li>
+          <span class="update-time">10-28 20:15</span>
+          <span><span class="update-title">语音房专项整治通报</span> <span class="update-summary">— 10 月共处置违规语音房 2,300 余个，低俗话术为最主要违规原因。</span></span>
+        </li>
+        <li>
+          <span class="update-time">10-25 09:00</span>
+          <span><span class="update-title">青少年模式拦截规则升级</span> <span class="update-summary">— 边缘内容拦截率提升 15%，新增对擦边短视频的主动识别。</span></span>
+        </li>
+        <li>
+          <span class="update-time">10-20 15:30</span>
+          <span><span class="update-title">某直播平台因审核疏漏被约谈</span> <span class="update-summary">— 通报指出夜间时段审核人力不足，要求限期整改并提交方案。</span></span>
+        </li>
+        <li>
+          <span class="update-time">10-15 11:10</span>
+          <span><span class="update-title">AI 预审模型 v3.2 上线</span> <span class="update-summary">— 对软色情图片识别准确率提升至 94.6%，误判率降至 3.1%。</span></span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Section 4: Categories -->
+    <section class="section" id="categories">
+      <h2>审核场景分类索引</h2>
+      <p class="section-desc">按内容形态划分的审核场景入口，点击可查看对应案例与规则。</p>
+      <div class="category-grid">
+        <a href="/#picks" class="category-item">直播审核</a>
+        <a href="/#picks" class="category-item">短视频审核</a>
+        <a href="/#picks" class="category-item">图文审核</a>
+        <a href="/#picks" class="category-item">语音审核</a>
+        <a href="/#picks" class="category-item">AI 生成内容</a>
+        <a href="/#picks" class="category-item">未成年人保护</a>
+        <a href="/#picks" class="category-item">弹幕与评论</a>
+        <a href="/#picks" class="category-item">私信与社交</a>
+      </div>
+    </section>
+
+    <!-- Section 5: Deep dive article -->
+    <section class="section" id="deepdive">
+      <h2>深度解析：软色情内容的判定维度与平台差异</h2>
+      <div class="article-body">
+        <p>
+          在内容审核的实际工作中，最常引发争议的并非明显的违规画面，而是处于灰色地带的“软色情”内容。这类内容通常不包含直接的暴露画面，但通过构图、灯光、肢体语言、文字暗示等方式传递性暗示。不同平台对软色情的判定尺度存在显著差异，理解这些差异是审核员的核心能力之一。
+        </p>
+
+        <h3>一、画面维度的三层判定框架</h3>
+        <p>
+          对图片和视频画面的判定，行业内普遍采用三层框架：<strong>暴露程度、姿态意图、场景语境</strong>。暴露程度是基础线，各平台对胸部、臀部、大腿根部等关键区域的裸露比例有明确的量化标准。姿态意图则关注人物是否刻意摆出具有性暗示的姿势，例如俯身角度、肢体舒展方向、手部位置等。场景语境是最终调节项，同样的穿着打扮在健身房、海滩、卧室、摄影棚等不同场景下的判定结论可能完全不同。
+        </p>
+        <p>
+          以 2026 年 10 月小红书通报的一起典型案例为例：同一组穿搭照片发布在“日常分享”标签下被判定正常，而发布在“深夜私房”标签下则触发预警。审核员的判断依据并非画面本身的变化，而是标签所构建的意图语境。这一案例说明，<strong>上下文信息在软色情判定中的权重正在持续提升</strong>。
+        </p>
+
+        <h3>二、短视频审核的时间维度特殊性</h3>
+        <p>
+          短视频审核与图文审核的最大差异在于时间维度的引入。一段 30 秒的视频中，可能只有 0.5 秒的画面触及阈值，但这一瞬间是否构成违规，取决于三个因素：
+        </p>
+        <ul>
+          <li><strong>截取帧率与平台规则：</strong>多数平台要求审核员以 0.1 秒为间隔截取关键帧，若连续 3 帧以上出现暴露画面则判定违规。部分平台对瞬时暴露（少于 0.2 秒）设置豁免，但需人工判断是否为刻意闪切。</li>
+          <li><strong>动作连贯性：</strong>换装、舞蹈、运动等场景中的短暂暴露，需结合动作的完整性和自然度判断。刻意放慢的换装动作与快速自然的转场，处置结论截然不同。</li>
+          <li><strong>重复与模式化：</strong>若同一账号多次发布包含相似闪切手法的视频，即使单条内容处于边缘，也可能触发账号级预警。</li>
+        </ul>
+
+        <h3>三、直播实时审核的决策压力</h3>
+        <p>
+          直播审核对时效性的要求远高于其他场景。审核员通常需要在 3 至 5 秒内完成“发现-判定-处置”全流程。在这种压力下，判定标准的记忆和快速匹配能力比深度分析更为关键。2026 年各平台普遍采用的处置分级为：
+        </p>
+        <ul>
+          <li><strong>A 类（立即断流）：</strong>出现明确的性行为、裸露关键部位、未成年人相关不当内容。</li>
+          <li><strong>B 类（警告+限流）：</strong>穿着暴露但未达断流标准、连续擦边动作、引导性话术配合礼物目标。</li>
+          <li><strong>C 类（记录+观察）：</strong>边缘性内容，画面无直接违规但整体氛围可疑，需持续观察后续行为。</li>
+        </ul>
+        <p>
+          直播场景的特殊性还在于，违规行为往往是渐进式升级的。主播可能从正常聊天开始，逐步试探边界，最终演变为明确的违规。因此，审核员需要关注“行为轨迹”而不仅是单帧画面。<strong>连续 3 次以上触发 C 类预警的主播，应手动升级监控等级</strong>，这是多数平台在 2026 年更新后的操作规范。
+        </p>
+
+        <h3>四、AI 生成内容带来的新挑战</h3>
+        <p>
+          2026 年最显著的变化是 AI 生成擦边内容的快速增长。这类内容在画面质量上已接近真实照片，传统基于皮肤纹理和光影判断的方法逐渐失效。当前行业主要采用三类特征进行辅助识别：手部指节数量异常、背景几何结构矛盾、以及面部与身体光影方向不一致。同时，各平台正在推进生成源标记机制，要求 AI 工具在输出内容中嵌入不可见的数字水印。
+        </p>
+        <p>
+          对于审核从业者而言，AI 生成内容的审核不仅考验画面识别能力，还需要理解生成工具的工作逻辑。了解主流模型在人体结构生成上的常见缺陷，可以显著提升审核效率。这也是鉴黄师呜呜呜持续整理 AI 审核专题的原因所在。
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 6: Guide -->
+    <section class="section" id="guide">
+      <h2>内容审核实操路径与判断依据</h2>
+      <p class="section-desc">从接到任务到完成判定的标准化流程，以及各环节的关键判断点。</p>
+      <ol class="guide-steps">
+        <li>
+          <strong>场景识别与规则匹配</strong>
+          <p>首先确认内容所属场景（图文、短视频、直播、语音），调取对应的平台规则细则。不同场景的阈值差异显著，例如直播场景对暴露画面的容忍度普遍低于图文场景。</p>
+        </li>
+        <li>
+          <strong>画面/语音关键信息提取</strong>
+          <p>图文内容关注构图、穿着、姿态、文字标签；短视频按 0.1 秒间隔截取关键帧；直播实时录制 5 秒片段；语音内容转写为文字后标注可疑话术。提取的信息应覆盖判定框架的全部维度。</p>
+        </li>
+        <li>
+          <strong>对照分级标准初步判定</strong>
+          <p>将提取的信息与平台分级标准逐项对照。先判断是否触及 A 类红线（明确违规），再判断是否落入 B 类（需处置），最后评估 C 类（观察）的可能性。初步判定应记录判断依据。</p>
+        </li>
+        <li>
+          <strong>上下文与账号历史核查</strong>
+          <p>查看该内容的发布标签、发布时间、账号历史记录。首次发布与屡次擦边的账号，即使单条内容相同，处置也可能不同。标签和标题中的暗示性词汇是重要的辅助判断信息。</p>
+        </li>
+        <li>
+          <strong>处置执行与记录归档</strong>
+          <p>根据最终判定执行断流、限流、警告或通过操作。所有判定需附带截图或语音片段存档，记录判定理由。对处于边缘的 C 类内容，设置定时复查提醒。</p>
+        </li>
+        <li>
+          <strong>申诉复核与规则反馈</strong>
+          <p>被处置方提出申诉时，复核员应独立重新判定，重点检查原判定是否遗漏上下文信息或误读规则。若发现规则本身存在模糊地带，应通过内部渠道反馈至规则制定团队。</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Section 7: FAQ -->
+    <section class="section" id="faq">
+      <h2>常见问题</h2>
+      <p class="section-desc">审核从业者与内容运营者最常搜索的六个问题。</p>
+      <div class="faq-list">
+        <details>
+          <summary>软色情和硬色情的判定边界在哪里？</summary>
+          <div class="faq-answer">
+            硬色情通常指包含明确的性行为画面或关键部位裸露的内容，各平台执行统一的零容忍标准。软色情的边界则因平台而异，核心判断依据是“整体性暗示意图”：画面是否通过构图、灯光、姿态等元素刻意营造性暗示氛围。2026 年多数平台采用“普通用户视角”测试——即一个无预设立场的普通人看到该内容是否会产生性联想。
+          </div>
+        </details>
+        <details>
+          <summary>短视频中一闪而过的暴露画面怎么处理？</summary>
+          <div class="faq-answer">
+            首先确认暴露时长。若单帧暴露持续时间少于 0.2 秒且无刻意重复，多数平台按 B 类（警告+限流）处理。若暴露时长超过 0.3 秒，或视频中存在多次类似闪切，则按 A 类处理。审核时需以 0.1 秒间隔截取关键帧，确认暴露的连续帧数。刻意放慢的换装动作与自然转场中的瞬时暴露，处置结论不同。
+          </div>
+        </details>
+        <details>
+          <summary>AI 生成的擦边图片和真人图片审核标准一样吗？</summary>
+          <div class="faq-answer">
+            判定尺度基本一致，但 AI 生成内容需要额外核查生成源。2026 年 9 月起，主流平台要求对疑似 AI 生成的擦边内容进行标记，并追溯使用的生成工具。审核时应检查手部指节、背景结构、光影方向等 AI 常见缺陷。若确认由 AI 工具生成且内容违规，除处置内容本身外，还需记录生成工具信息用于后续溯源。
+          </div>
+        </details>
+        <details>
+          <summary>直播审核中如何判断“擦边话术”是否违规？</summary>
+          <div class="faq-answer">
+            主要看话术是否与礼物或付费行为挂钩。如果主播使用性暗示话术引导观众刷礼物、加私信或进入付费房间，且连续出现 3 句以上，则构成 B 类违规。单独一句暧昧表达通常归入 C 类观察。审核时应记录完整话术上下文，不能只截取单句判断。语音房场景的判定标准与直播视频场景一致。
+          </div>
+        </details>
+        <details>
+          <summary>青少年模式下的审核阈值和普通模式有什么区别？</summary>
+          <div class="faq-answer">
+            青少年模式对边缘内容的拦截阈值显著更低。普通模式下判定为 C 类（观察）的内容，在青少年模式下可能直接触发 B 类处置。具体差异包括：暴露面积阈值下调约 30%，暗示性文字的关键词库扩大，换装类短视频的截帧频率提高。审核员在青少年模式下应执行更严格的判定标准，误拦截可通过申诉渠道复核。
+          </div>
+        </details>
+        <details>
+          <summary>第一次接触审核工作，应该从哪类内容开始熟悉？</summary>
+          <div class="faq-answer">
+            建议从图文审核开始。图文内容的判定要素相对静态，便于逐项对照规则、理解三层判定框架。熟悉图文场景后，再过渡到短视频审核，学习时间维度和关键帧截取方法。直播审核对反应速度要求最高，适合在掌握前两类场景的判定逻辑后再接触。语音审核则需要额外熟悉话术语义分级和转写工具的使用。
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Section 8: Comments -->
+    <section class="section" id="comments">
+      <h2>从业者讨论</h2>
+      <p class="section-desc">来自审核员社区的真实讨论摘录，围绕具体案例与判定标准展开。</p>
+      <ul class="comment-list">
+        <li class="comment-item">
+          <div class="comment-avatar">审</div>
+          <div class="comment-content">
+            <div class="comment-name">夜班审核员老陈</div>
+            <div class="comment-text">那个换装视频的 0.3 秒标准确实好用。之前一直纠结 0.2 秒和 0.5 秒的界限，现在按平台细则统一执行，争议少了很多。</div>
+            <div class="comment-time">11-07 23:15</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">阿</div>
+          <div class="comment-content">
+            <div class="comment-name">阿茶不想加班</div>
+            <div class="comment-text">AI 擦边图现在真的多，手部指节那个方法试了，确实能筛出一批。不过有些模型迭代后手部也修好了，还得看背景光影。</div>
+            <div class="comment-time">11-07 18:40</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">L</div>
+          <div class="comment-content">
+            <div class="comment-name">Lily_审核组</div>
+            <div class="comment-text">青少年模式的阈值确实低，上周拦截了一条普通模式能过的穿搭视频，申诉后维持原判。宁可严一点也不能漏。</div>
+            <div class="comment-time">11-06 14:20</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">深</div>
+          <div class="comment-content">
+            <div class="comment-name">深水区观察</div>
+            <div class="comment-text">语音房的话术分级那篇很实用，18 条对照表直接贴在工作台旁边了。不过实际场景里话术变化很快，还是得靠经验判断。</div>
+            <div class="comment-time">11-05 21:05</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">小</div>
+          <div class="comment-content">
+            <div class="comment-name">小鹿审核笔记</div>
+            <div class="comment-text">深夜连麦那个案例我们也遇到过类似的，主播不露脸只出声，全靠话术引导。这种真的难判，录音转写后再看上下文才行。</div>
+            <div class="comment-time">11-05 10:30</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">K</div>
+          <div class="comment-content">
+            <div class="comment-name">K哥说审核</div>
+            <div class="comment-text">AI 预审模型 v3.2 上线后误判率确实降了，但软色情这块还是得靠人工。机器对构图意图的理解差得远。</div>
+            <div class="comment-time">11-04 16:50</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">柠</div>
+          <div class="comment-content">
+            <div class="comment-name">柠檬不酸</div>
+            <div class="comment-text">发现一个规律：刻意擦边的内容往往标签特别多，恨不得把所有流量词都堆上去。正常分享的标签反而少而准。</div>
+            <div class="comment-time">11-04 09:15</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">一</div>
+          <div class="comment-content">
+            <div class="comment-name">一只审核狗</div>
+            <div class="comment-text">直播 A 类断流的标准很明确，但 B 类警告后的复查经常被忽略。很多主播被警告后换个号继续，平台之间不打通真的难。</div>
+            <div class="comment-time">11-03 22:40</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">大</div>
+          <div class="comment-content">
+            <div class="comment-name">大壮审核日常</div>
+            <div class="comment-text">图文审核新人的话，建议先把平台规则细则完整读三遍。很多误判都是因为凭感觉，没对照具体条款。</div>
+            <div class="comment-time">11-03 15:25</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">星</div>
+          <div class="comment-content">
+            <div class="comment-name">星夜兼程</div>
+            <div class="comment-text">B 站 Q3 报告那个数据挺有意思，AI 辅助覆盖率 78%，说明人工审核还是主力。软色情判定短期内很难完全自动化。</div>
+            <div class="comment-time">11-02 11:00</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">小</div>
+          <div class="comment-content">
+            <div class="comment-name">小透明审核</div>
+            <div class="comment-text">语音房那个低俗话术分级，直接违规和需结合上下文判断的界限有时候挺模糊的。同一个词在不同语境下差别很大。</div>
+            <div class="comment-time">11-01 19:35</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">M</div>
+          <div class="comment-content">
+            <div class="comment-name">Moon_内容安全</div>
+            <div class="comment-text">换装视频截帧 0.1 秒间隔这个操作习惯确实重要。之前有个案例就是靠连续 4 帧确认了刻意暴露，主播申诉也没用。</div>
+            <div class="comment-time">10-31 14:10</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">风</div>
+          <div class="comment-content">
+            <div class="comment-name">风控老王</div>
+            <div class="comment-text">青少年模式申诉流程太长了，用户等不起。平台能不能加个快速复核通道？审核员这边也累。</div>
+            <div class="comment-time">10-30 09:45</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">蓝</div>
+          <div class="comment-content">
+            <div class="comment-name">蓝莓审核员</div>
+            <div class="comment-text">AI 生成内容的水印机制赶紧推吧，靠人眼看特征真的跟不上模型迭代速度。上个月还能用的识别方法，这个月就失效了。</div>
+            <div class="comment-time">10-29 17:20</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">清</div>
+          <div class="comment-content">
+            <div class="comment-name">清风徐来审核组</div>
+            <div class="comment-text">深夜连麦的处置建议很到位。我们组现在夜班增加了语音转写实时监控，效率提升明显。</div>
+            <div class="comment-time">10-28 23:50</div>
+          </div>
+        </li>
+        <li class="comment-item">
+          <div class="comment-avatar">半</div>
+          <div class="comment-content">
+            <div class="comment-name">半糖去冰</div>
+            <div class="comment-text">感觉现在审核越来越难做了，不是内容变多了，是边界越来越模糊。软色情的判定太依赖主观判断。</div>
+            <div class="comment-time">10-27 13:30</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Section 9: News -->
+    <section class="section" id="news">
+      <h2>相关资讯</h2>
+      <p class="section-desc">2026 年 10 月至 11 月内容审核领域的具体动态。</p>
+      <ul class="news-list">
+        <li class="news-item">
+          <h4><a href="/#news">抖音发布 11 月内容安全公告：AI 擦边专项治理启动</a></h4>
+          <div class="news-date">2026-11-07</div>
+          <div class="news-summary">公告显示，11 月 1 日至 7 日共处置 AI 生成擦边内容 1.2 万条，封禁账号 340 个，并公布三类典型识别特征供审核团队参考。</div>
+        </li>
+        <li class="news-item">
+          <h4><a href="/#news">快手直播连麦新规实施首周：B 类处置量上升 23%</a></h4>
+          <div class="news-date">2026-11-06</div>
+          <div class="news-summary">新规将连麦双方同时暴露的判定等级上调后，首周 B 类处置量明显增加，平台表示将增配夜间审核人力以应对。</div>
+        </li>
+        <li class="news-item">
+          <h4><a href="/#news">B 站 Q3 内容安全报告：软色情违规投稿环比下降 12%</a></h4>
+          <div class="news-date">2026-11-05</div>
+          <div class="news-summary">报告指出 AI 辅助审核覆盖率提升至 78%，换装类与舞蹈类视频的截帧审核效率提高，人工复核压力有所缓解。</div>
+        </li>
+        <li class="news-item">
+          <h4><a href="/#news">微信视频号更新换装类细则：明确 0.3 秒截帧标准</a></h4>
+          <div class="news-date">2026-11-03</div>
+          <div class="news-summary">细则新增 5 个示例视频，覆盖自然转场、刻意闪切、慢动作换装等场景，并明确连续 3 帧以上暴露判定为违规。</div>
+        </li>
+        <li class="news-item">
+          <h4><a href="/#news">语音房专项整治 10 月通报：处置违规房间 2300 余个</a></h4>
+          <div class="news-date">2026-10-28</div>
+          <div class="news-summary">低俗话术为最主要违规原因，占比 61%。通报要求各平台在 11 月底前完成语音房实时转写系统的升级部署。</div>
+        </li>
+        <li class="news-item">
+          <h4><a href="/#news">AI 预审模型 v3.2 正式上线：软色情识别准确率 94.6%</a></h4>
+          <div class="news-date">2026-10-15</div>
+          <div class="news-summary">新版本在构图意图识别和场景语境判断上有所提升，误判率降至 3.1%。平台建议审核员将 AI 预审结果作为初筛参考，最终判定仍由人工完成。</div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Section 10: Related -->
+    <section class="section" id="related">
+      <h2>延伸阅读方向</h2>
+      <p class="section-desc">与内容审核相关的细分话题与延伸方向。</p>
+      <div class="tag-cloud">
+        <a href="/#deepdive">软色情判定三层框架</a>
+        <a href="/#guide">直播实时审核操作流程</a>
+        <a href="/#picks">AI 生成内容识别特征</a>
+        <a href="/#faq">青少年模式审核差异</a>
+        <a href="/#updates">平台规则更新追踪</a>
+        <a href="/#deepdive">换装视频截帧标准对比</a>
+        <a href="/#picks">语音房话术语义分级</a>
+        <a href="/#guide">申诉复核判断依据</a>
+      </div>
+    </section>
+
+    <!-- Section 11: Ranking -->
+    <section class="section" id="ranking">
+      <h2>案例热度榜</h2>
+      <p class="section-desc">近 30 天内从业者查阅最多的审核案例与规则条目。</p>
+      <ol class="ranking-list">
+        <li>
+          <span class="rank-name">AI 生成擦边图特征比对方法</span>
+          <span class="rank-info">查阅 2,840 次</span>
+        </li>
+        <li>
+          <span class="rank-name">深夜连麦场景擦边话术识别</span>
+          <span class="rank-info">查阅 2,310 次</span>
+        </li>
+        <li>
+          <span class="rank-name">换装视频 0.3 秒截帧标准</span>
+          <span class="rank-info">查阅 1,960 次</span>
+        </li>
+        <li>
+          <span class="rank-name">青少年模式拦截阈值对比</span>
+          <span class="rank-info">查阅 1,720 次</span>
+        </li>
+        <li>
+          <span class="rank-name">语音房低俗话术 18 条对照表</span>
+          <span class="rank-info">查阅 1,540 次</span>
+        </li>
+        <li>
+          <span class="rank-name">暗示性构图与正常穿搭边界</span>
+          <span class="rank-info">查阅 1,380 次</span>
+        </li>
+      </ol>
+    </section>
+
+  </main>
+
+  <!-- Right aside -->
+  <aside class="aside-col" aria-label="辅助信息">
+    <div class="aside-card">
+      <h3>规则速查</h3>
+      <ul class="aside-list">
+        <li><a href="/#deepdive">软色情三层判定框架</a><span class="aside-meta">画面·姿态·语境</span></li>
+        <li><a href="/#guide">直播处置分级 A/B/C</a><span class="aside-meta">断流·限流·观察</span></li>
+        <li><a href="/#picks">短视频关键帧截取频率</a><span class="aside-meta">0.1 秒间隔</span></li>
+        <li><a href="/#faq">青少年模式阈值下调比例</a><span class="aside-meta">约 30%</span></li>
+        <li><a href="/#picks">AI 内容识别三类特征</a><span class="aside-meta">手部·背景·光影</span></li>
+      </ul>
+    </div>
+    <div class="aside-card">
+      <h3>近期更新</h3>
+      <ul class="aside-list">
+        <li><a href="/#updates">抖音 AI 擦边专项类目</a><span class="aside-meta">11-08</span></li>
+        <li><a href="/#updates">快手连麦判定阈值调整</a><span class="aside-meta">11-07</span></li>
+        <li><a href="/#updates">B 站 Q3 安全报告</a><span class="aside-meta">11-05</span></li>
+        <li><a href="/#updates">视频号换装细则更新</a><span class="aside-meta">11-03</span></li>
+        <li><a href="/#updates">语音房专项整治通报</a><span class="aside-meta">10-28</span></li>
+      </ul>
+    </div>
+    <div class="aside-card">
+      <h3>热门标签</h3>
+      <div class="tag-cloud" style="gap:6px;">
+        <a href="/#picks" style="font-size:12px;padding:4px 10px;">直播审核</a>
+        <a href="/#picks" style="font-size:12px;padding:4px 10px;">AI 擦边</a>
+        <a href="/#picks" style="font-size:12px;padding:4px 10px;">软色情判定</a>
+        <a href="/#picks" style="font-size:12px;padding:4px 10px;">青少年模式</a>
+        <a href="/#picks" style="font-size:12px;padding:4px 10px;">语音房</a>
+        <a href="/#picks" style="font-size:12px;padding:4px 10px;">换装视频</a>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">鉴黄师呜呜呜</div>
+      <p>聚焦网络内容审核领域的案例、规则与实操方法整理，服务于内容安全从业者的日常查阅与学习参考。</p>
+    </div>
+    <div class="footer-col">
+      <h4>内容栏目</h4>
+      <ul>
+        <li><a href="/#overview">领域概览</a></li>
+        <li><a href="/#picks">精选案例</a></li>
+        <li><a href="/#updates">最新动态</a></li>
+        <li><a href="/#deepdive">深度解析</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>学习资源</h4>
+      <ul>
+        <li><a href="/#guide">实操指南</a></li>
+        <li><a href="/#faq">常见问题</a></li>
+        <li><a href="/#comments">从业者讨论</a></li>
+        <li><a href="/#ranking">案例热度榜</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>分类索引</h4>
+      <ul>
+        <li><a href="/#categories">直播审核</a></li>
+        <li><a href="/#categories">短视频审核</a></li>
+        <li><a href="/#categories">AI 生成内容</a></li>
+        <li><a href="/#categories">未成年人保护</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>部分内容为示例数据，仅用于展示页面结构。© 2026 鉴黄师呜呜呜 · 内容审核学习参考</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Search filter: highlight matching sections or show no-result feedback
+  var searchInput = document.getElementById('searchInput');
+  var searchBtn = document.getElementById('searchBtn');
+  var sections = document.querySelectorAll('.section');
+
+  function performSearch() {
+    var query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      sections.forEach(function(s){ s.style.display = ''; });
+      removeNoResult();
+      return;
+    }
+    var found = 0;
+    sections.forEach(function(section){
+      var text = section.textContent.toLowerCase();
+      if (text.indexOf(query) !== -1) {
+        section.style.display = '';
+        found++;
+      } else {
+        section.style.display = 'none';
+      }
+    });
+    removeNoResult();
+    if (found === 0) {
+      var noResult = document.createElement('div');
+      noResult.id = 'noResultMsg';
+      noResult.style.cssText = 'text-align:center;padding:48px 24px;background:#fff;border-radius:10px;border:1px solid #ece8e2;color:#7b8794;font-size:15px;';
+      noResult.textContent = '未找到与「' + searchInput.value.trim() + '」相关的内容，请尝试其他关键词。';
+      document.querySelector('.content-col').appendChild(noResult);
+    }
+  }
+
+  function removeNoResult() {
+    var el = document.getElementById('noResultMsg');
+    if (el) el.remove();
+  }
+
+  searchBtn.addEventListener('click', performSearch);
+  searchInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') { e.preventDefault(); performSearch(); }
+  });
+  searchInput.addEventListener('input', function(){
+    if (searchInput.value.trim() === '') {
+      sections.forEach(function(s){ s.style.display = ''; });
+      removeNoResult();
+    }
+  });
+})();
+</script>
+</body>
+  </html>
