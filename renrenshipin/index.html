@@ -1,0 +1,2184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>人人视频网页版入口 - 热门剧集与观看指南</title>
+  <meta name="description" content="人人视频网页版入口提供热门美剧、韩剧、日剧、泰剧等剧集条目与观看路径，涵盖悬疑、爱情、古装、综艺等类型，适合想找剧、了解更新动态与评分口碑的观众。">
+  <meta name="keywords" content="美剧在线观看,韩剧更新,日剧推荐,泰剧入口,剧集分类">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c0392b'/%3E%3Cpath d='M10 9h4v14h-4zM18 9h4l-4 14h-4z' fill='%23fff'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --color-bg: #f7f5f2;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f2efe9;
+      --color-primary: #b83a2c;
+      --color-primary-dark: #8e2a1f;
+      --color-primary-light: #fbeae7;
+      --color-accent: #d98e2c;
+      --color-accent-light: #fdf3e4;
+      --color-text: #1e1c1a;
+      --color-text-secondary: #5e5a56;
+      --color-text-muted: #8e8a85;
+      --color-border: #e5e0d9;
+      --color-border-light: #f0ece6;
+      --color-tag-bg: #f0ece6;
+      --color-tag-text: #5e5a56;
+      --color-success: #2e7d5b;
+      --color-success-bg: #e8f5ee;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --font-serif: "Songti SC", "Noto Serif SC", Georgia, serif;
+      --header-height: 56px;
+      --announce-height: 40px;
+      --sticky-offset: calc(var(--header-height) + var(--announce-height));
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--sticky-offset);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.7;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- 吸顶公告条 + 页头 ---------- */
+    .announce-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--announce-height);
+      background: var(--color-primary-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .announce-bar .announce-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .announce-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.2);
+      padding: 1px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .site-header {
+      position: sticky;
+      top: var(--announce-height);
+      z-index: 99;
+      height: var(--header-height);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      flex: 1;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .main-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .main-nav a {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .main-nav a:hover {
+      background: var(--color-surface-alt);
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .header-action {
+      flex-shrink: 0;
+    }
+
+    .header-action a {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .header-action a:hover {
+      background: var(--color-primary-dark);
+      text-decoration: none;
+    }
+
+    /* ---------- 三栏布局 ---------- */
+    .page-layout {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) 260px;
+      gap: 24px;
+      align-items: start;
+      margin-top: 24px;
+    }
+
+    /* ---------- 首屏 ---------- */
+    .hero {
+      grid-column: 1 / -1;
+      background: var(--color-surface);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      align-items: stretch;
+      min-height: 280px;
+    }
+
+    .hero-content {
+      padding: 36px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: "";
+      width: 20px;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: 1px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 22px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      line-height: 1.4;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-dark);
+      text-decoration: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      background: var(--color-surface-alt);
+      text-decoration: none;
+    }
+
+    .hero-visual {
+      position: relative;
+      background: linear-gradient(135deg, #2c1810 0%, #5e2a1f 50%, #8e3a2c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      min-height: 260px;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-visual-labels {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 24px;
+      width: 100%;
+    }
+
+    .hero-label-card {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      color: #fff;
+    }
+
+    .hero-label-card .hlc-title {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .hero-label-card .hlc-meta {
+      font-size: 11px;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+
+    /* ---------- 左频道索引 ---------- */
+    .channel-sidebar {
+      position: sticky;
+      top: calc(var(--sticky-offset) + 16px);
+    }
+
+    .channel-nav {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: 16px 0;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .channel-nav-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0 16px 10px;
+    }
+
+    .channel-nav ul {
+      list-style: none;
+    }
+
+    .channel-nav li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 13.5px;
+      color: var(--color-text-secondary);
+      transition: background 0.12s, color 0.12s;
+      border-left: 2px solid transparent;
+    }
+
+    .channel-nav li a:hover {
+      background: var(--color-surface-alt);
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .channel-nav li a.active {
+      color: var(--color-primary);
+      border-left-color: var(--color-primary);
+      background: var(--color-primary-light);
+      font-weight: 600;
+    }
+
+    .channel-count {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--color-text-muted);
+      background: var(--color-surface-alt);
+      border-radius: 10px;
+      padding: 0 6px;
+      line-height: 18px;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* ---------- 主内容区 ---------- */
+    .main-content {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .section {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .section-link {
+      font-size: 13px;
+      color: var(--color-primary);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* ---------- 概览 ---------- */
+    .overview-text {
+      font-size: 14.5px;
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+    }
+
+    .overview-text p + p {
+      margin-top: 10px;
+    }
+
+    /* ---------- 卡片网格 ---------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .content-card {
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--color-surface);
+      transition: box-shadow 0.15s, border-color 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-border);
+    }
+
+    .card-thumb {
+      position: relative;
+      aspect-ratio: 4/3;
+      background: var(--color-surface-alt);
+      overflow: hidden;
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(4px);
+    }
+
+    .card-body {
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--color-text-secondary);
+      line-height: 1.55;
+      margin-bottom: 10px;
+      flex: 1;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10.5px;
+      padding: 1px 7px;
+      border-radius: 3px;
+      background: var(--color-tag-bg);
+      color: var(--color-tag-text);
+      line-height: 1.6;
+      white-space: nowrap;
+    }
+
+    .tag-primary {
+      background: var(--color-primary-light);
+      color: var(--color-primary-dark);
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--color-text-muted);
+      border-top: 1px solid var(--color-border-light);
+      padding-top: 8px;
+      margin-top: auto;
+    }
+
+    .card-meta .rating {
+      color: var(--color-accent);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* ---------- 紧凑列表 ---------- */
+    .update-list {
+      list-style: none;
+    }
+
+    .update-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-border-light);
+      font-size: 14px;
+    }
+
+    .update-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .update-item:first-child {
+      padding-top: 0;
+    }
+
+    .update-time {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .update-title {
+      font-weight: 600;
+      color: var(--color-text);
+      flex-shrink: 0;
+    }
+
+    .update-summary {
+      color: var(--color-text-secondary);
+      font-size: 13.5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ---------- 分类入口 ---------- */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .category-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      padding: 12px 14px;
+      background: var(--color-surface-alt);
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+      cursor: pointer;
+    }
+
+    .category-chip:hover {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .category-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .category-desc {
+      font-size: 11.5px;
+      color: var(--color-text-muted);
+    }
+
+    /* ---------- 深度解析 ---------- */
+    .deep-dive h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin: 20px 0 8px;
+      padding-left: 10px;
+      border-left: 3px solid var(--color-primary);
+      line-height: 1.4;
+    }
+
+    .deep-dive h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .deep-dive p {
+      font-size: 14.5px;
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+
+    .deep-dive ul {
+      list-style: none;
+      margin: 10px 0 14px;
+      padding: 0;
+    }
+
+    .deep-dive ul li {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+      padding: 6px 0 6px 22px;
+      position: relative;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .deep-dive ul li:last-child {
+      border-bottom: none;
+    }
+
+    .deep-dive ul li::before {
+      content: "▸";
+      position: absolute;
+      left: 2px;
+      color: var(--color-primary);
+      font-size: 12px;
+      top: 8px;
+    }
+
+    /* ---------- 体验指南编号步骤 ---------- */
+    .guide-steps {
+      counter-reset: step;
+      list-style: none;
+    }
+
+    .guide-step {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--color-border-light);
+      counter-increment: step;
+    }
+
+    .guide-step:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .guide-step:first-child {
+      padding-top: 0;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-primary-light);
+      color: var(--color-primary-dark);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .step-num::before {
+      content: counter(step);
+    }
+
+    .step-content h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 3px;
+    }
+
+    .step-content p {
+      font-size: 13.5px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-list details {
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .faq-list details:last-child {
+      border-bottom: none;
+    }
+
+    .faq-list summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 0;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      line-height: 1.5;
+      transition: color 0.15s;
+    }
+
+    .faq-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-list summary:hover {
+      color: var(--color-primary);
+    }
+
+    .faq-list summary::after {
+      content: "+";
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-list details[open] summary::after {
+      content: "−";
+      color: var(--color-primary);
+    }
+
+    .faq-answer {
+      font-size: 13.5px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      padding: 0 0 14px;
+      max-width: 640px;
+    }
+
+    /* ---------- 评论 ---------- */
+    .comment-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .comment-item {
+      background: var(--color-surface-alt);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .comment-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .comment-user {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .comment-date {
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+
+    .comment-text {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ---------- 相关资讯 ---------- */
+    .news-list {
+      list-style: none;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .news-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .news-item:first-child {
+      padding-top: 0;
+    }
+
+    .news-thumb {
+      flex-shrink: 0;
+      width: 100px;
+      height: 68px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--color-surface-alt);
+    }
+
+    .news-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .news-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .news-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.4;
+      margin-bottom: 3px;
+    }
+
+    .news-title a {
+      color: inherit;
+    }
+
+    .news-title a:hover {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .news-summary {
+      font-size: 12.5px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-date {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    /* ---------- 标签索引 ---------- */
+    .tag-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      padding: 5px 14px;
+      background: var(--color-surface-alt);
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border-light);
+      transition: all 0.15s;
+    }
+
+    .tag-pill:hover {
+      background: var(--color-primary-light);
+      color: var(--color-primary-dark);
+      border-color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    /* ---------- 榜单 ---------- */
+    .rank-list {
+      list-style: none;
+      counter-reset: rank;
+    }
+
+    .rank-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-border-light);
+      counter-increment: rank;
+    }
+
+    .rank-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .rank-item:first-child {
+      padding-top: 0;
+    }
+
+    .rank-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background: var(--color-surface-alt);
+      color: var(--color-text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rank-item:nth-child(1) .rank-num {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    .rank-item:nth-child(2) .rank-num {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    .rank-item:nth-child(3) .rank-num {
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+    }
+
+    .rank-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      flex: 1;
+    }
+
+    .rank-name a {
+      color: inherit;
+    }
+
+    .rank-name a:hover {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .rank-meta {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+    }
+
+    /* ---------- 右辅助栏 ---------- */
+    .right-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: calc(var(--sticky-offset) + 16px);
+    }
+
+    .sidebar-panel {
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .sidebar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sidebar-title::before {
+      content: "";
+      width: 3px;
+      height: 14px;
+      background: var(--color-primary);
+      border-radius: 2px;
+    }
+
+    .sidebar-list {
+      list-style: none;
+    }
+
+    .sidebar-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .sidebar-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .sidebar-list li:first-child {
+      padding-top: 0;
+    }
+
+    .sidebar-list .sl-index {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      font-weight: 600;
+      width: 16px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-list .sl-name {
+      flex: 1;
+      color: var(--color-text);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .sidebar-list .sl-name a {
+      color: inherit;
+    }
+
+    .sidebar-list .sl-name a:hover {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .sidebar-list .sl-tag {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      background: var(--color-surface-alt);
+      padding: 0 6px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .update-stream li {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--color-border-light);
+      font-size: 12.5px;
+    }
+
+    .update-stream li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .update-stream li:first-child {
+      padding-top: 0;
+    }
+
+    .us-name {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .us-desc {
+      color: var(--color-text-muted);
+      font-size: 11.5px;
+    }
+
+    /* ---------- 页尾 ---------- */
+    .site-footer {
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      margin-top: 40px;
+      padding: 36px 0 0;
+    }
+
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 28px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-brand .brand-text {
+      font-size: 16px;
+    }
+
+    .footer-desc {
+      font-size: 12.5px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 6px;
+    }
+
+    .footer-col li a {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    .footer-col li a:hover {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--color-border-light);
+      padding: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 1200px) {
+      .page-layout {
+        grid-template-columns: 160px minmax(0, 1fr) 240px;
+        gap: 18px;
+      }
+      .hero {
+        grid-template-columns: 1fr 320px;
+      }
+      .hero h1 {
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .page-layout {
+        grid-template-columns: 1fr 280px;
+      }
+      .channel-sidebar {
+        display: none;
+      }
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-visual {
+        display: none;
+      }
+      .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 14px;
+        margin-top: 16px;
+      }
+      .right-sidebar {
+        position: static;
+      }
+      .hero-content {
+        padding: 24px 20px;
+      }
+      .hero h1 {
+        font-size: 24px;
+      }
+      .section {
+        padding: 18px;
+      }
+      .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+      .comment-list {
+        grid-template-columns: 1fr;
+      }
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .news-thumb {
+        width: 80px;
+        height: 56px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .main-nav {
+        display: none;
+      }
+      .header-inner {
+        gap: 12px;
+      }
+      .announce-bar {
+        font-size: 12px;
+      }
+      .update-summary {
+        white-space: normal;
+      }
+      .update-item {
+        flex-wrap: wrap;
+        gap: 4px 10px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .category-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* 焦点样式 */
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<!-- 吸顶公告条 -->
+<div class="announce-bar" role="status">
+  <div class="announce-inner">
+    <span class="announce-badge">更新</span>
+    <span>本周新增 12 部美剧、8 部韩剧条目 &nbsp;·&nbsp; 11 月 7 日《怪奇物语》第五季上线 &nbsp;·&nbsp; 悬疑专题已收录 36 部</span>
+  </div>
+</div>
+
+<!-- 吸顶页头 -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <svg class="brand-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#b83a2c"/>
+        <path d="M10 9h4v14h-4z" fill="#fff"/>
+        <path d="M18 9h4l-4 14h-4z" fill="#fff" opacity="0.75"/>
+        <circle cx="25" cy="9" r="2" fill="#f0c060"/>
+      </svg>
+      <span class="brand-text">人人视频网页版入口</span>
+    </div>
+    <nav class="main-nav" aria-label="主题导航">
+      <a href="#overview">领域概览</a>
+      <a href="#featured">精选推荐</a>
+      <a href="#updates">最新更新</a>
+      <a href="#categories">分类入口</a>
+      <a href="#deep-dive">深度解析</a>
+      <a href="#guide">观看指南</a>
+      <a href="#faq">常见问答</a>
+      <a href="#comments">用户评论</a>
+      <a href="#news">相关资讯</a>
+    </nav>
+    <div class="header-action">
+      <a href="#featured">开始找剧</a>
+    </div>
+  </div>
+</header>
+
+<!-- 页面主体 -->
+<div class="page-layout">
+
+  <!-- 首屏 -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-content">
+      <div class="hero-eyebrow">剧集聚合 · 观看路径</div>
+      <h1 id="hero-heading">人人视频网页版入口</h1>
+      <p class="hero-desc">
+        汇聚美剧、韩剧、日剧、泰剧及综艺等热门剧集条目，提供每部作品的类型标签、更新进度、评分口碑与观看顺序建议。适合想快速找到下一部剧、对比同类型作品、了解当前更新动态的观众。
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#featured">浏览精选剧集</a>
+        <a class="btn btn-outline" href="#updates">查看今日更新</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 380 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2c1810"/>
+            <stop offset="100%" stop-color="#5e2a1f"/>
+          </linearGradient>
+          <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.08)"/>
+          </pattern>
+        </defs>
+        <rect width="380" height="280" fill="url(#hg1)"/>
+        <rect width="380" height="280" fill="url(#dots)"/>
+        <circle cx="290" cy="60" r="80" fill="rgba(184,58,44,0.3)"/>
+        <circle cx="70" cy="220" r="60" fill="rgba(217,142,44,0.15)"/>
+        <circle cx="340" cy="230" r="40" fill="rgba(255,255,255,0.05)"/>
+      </svg>
+      <div class="hero-visual-labels">
+        <div class="hero-label-card">
+          <div class="hlc-title">怪奇物语 第五季</div>
+          <div class="hlc-meta">科幻 / 悬疑 · 11 月 7 日更新</div>
+        </div>
+        <div class="hero-label-card">
+          <div class="hlc-title">黑暗荣耀 第三季</div>
+          <div class="hlc-meta">复仇 / 剧情 · 评分 9.1</div>
+        </div>
+        <div class="hero-label-card">
+          <div class="hlc-title">重启人生 特别篇</div>
+          <div class="hlc-meta">日剧 / 奇幻 · 11 月 5 日上线</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 左侧频道索引 -->
+  <aside class="channel-sidebar" aria-label="频道分类">
+    <nav class="channel-nav">
+      <div class="channel-nav-title">频道分类</div>
+      <ul>
+        <li><a href="#categories" class="active">全部剧集 <span class="channel-count">86</span></a></li>
+        <li><a href="#categories">美剧 <span class="channel-count">32</span></a></li>
+        <li><a href="#categories">韩剧 <span class="channel-count">24</span></a></li>
+        <li><a href="#categories">日剧 <span class="channel-count">15</span></a></li>
+        <li><a href="#categories">泰剧 <span class="channel-count">8</span></a></li>
+        <li><a href="#categories">英剧 <span class="channel-count">7</span></a></li>
+        <li><a href="#categories">悬疑推理</a></li>
+        <li><a href="#categories">爱情甜宠</a></li>
+        <li><a href="#categories">古装历史</a></li>
+        <li><a href="#categories">综艺真人秀</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+
+    <!-- 1. 主题领域概览 -->
+    <section class="section" id="overview">
+      <div class="section-header">
+        <h2 class="section-title">剧集领域概览</h2>
+        <span class="section-subtitle">当前热门方向与类型分布</span>
+      </div>
+      <div class="overview-text">
+        <p>
+          人人视频网页版入口所聚合的剧集内容，覆盖美剧、韩剧、日剧、泰剧、英剧及部分华语剧集与综艺。按类型划分，当前最受关注的方向包括：悬疑推理（如《怪奇物语》《黑暗荣耀》）、爱情甜宠（如《泪之女王》《背着善宰跑》）、古装历史（如《王国》《锦绣未央》）、科幻奇幻（如《人生复本》《重启人生》），以及真人秀与脱口秀综艺。
+        </p>
+        <p>
+          从更新节奏看，美剧通常按周更（每周三至周五集中上线），韩剧多为每周两集（周六、周日），日剧以周更为主（周一至周三），泰剧更新频率较高但单集时长较短。评分维度上，观众通常参考豆瓣开分、IMDb 评分与社交平台讨论热度三项指标。当前 11 月上旬，秋冬档新剧集中开播，包括《怪奇物语》第五季、《黑暗荣耀》第三季、《重启人生》特别篇等条目，同时部分夏季档作品进入收尾阶段。
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. 精选内容推荐 -->
+    <section class="section" id="featured">
+      <div class="section-header">
+        <h2 class="section-title">精选剧集推荐</h2>
+        <a class="section-link" href="#categories">查看全部 →</a>
+      </div>
+      <div class="card-grid">
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/stranger-things-s5/400/300" alt="怪奇物语第五季剧照" width="400" height="300" loading="lazy">
+            <span class="card-badge">科幻</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">怪奇物语 第五季</h3>
+            <p class="card-desc">最终季回归，霍金斯小镇面临颠倒世界的全面入侵。多线叙事收束，角色命运走向揭晓。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">美剧</span>
+              <span class="tag">悬疑</span>
+              <span class="tag">80年代</span>
+            </div>
+            <div class="card-meta">
+              <span>11 月 7 日更新</span>
+              <span class="rating">9.3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/dark-glory-s3/400/300" alt="黑暗荣耀第三季剧照" width="400" height="300" loading="lazy">
+            <span class="card-badge">复仇</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">黑暗荣耀 第三季</h3>
+            <p class="card-desc">文东恩的复仇计划进入终局，加害者群体的内部裂痕成为新变量。法庭戏与情感线交织。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">韩剧</span>
+              <span class="tag">剧情</span>
+              <span class="tag">复仇</span>
+            </div>
+            <div class="card-meta">
+              <span>11 月 2 日全季上线</span>
+              <span class="rating">9.1</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/rebirth-special/400/300" alt="重启人生特别篇剧照" width="400" height="300" loading="lazy">
+            <span class="card-badge">奇幻</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">重启人生 特别篇</h3>
+            <p class="card-desc">麻美与真理的第五轮人生番外，聚焦配角视角。轻喜剧基调下讨论平凡生活的价值。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">日剧</span>
+              <span class="tag">治愈</span>
+              <span class="tag">轮回</span>
+            </div>
+            <div class="card-meta">
+              <span>11 月 5 日上线</span>
+              <span class="rating">8.9</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/queen-tears/400/300" alt="泪之女王剧照" width="400" height="300" loading="lazy">
+            <span class="card-badge">爱情</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">泪之女王</h3>
+            <p class="card-desc">财阀继承人与乡村出身律师的婚姻危机与重新靠近。细腻刻画夫妻关系中的权力与情感。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">韩剧</span>
+              <span class="tag">甜宠</span>
+              <span class="tag">财阀</span>
+            </div>
+            <div class="card-meta">
+              <span>已完结 · 16 集</span>
+              <span class="rating">8.7</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/kingdom-history/400/300" alt="王国第三季剧照" width="400" height="300" loading="lazy">
+            <span class="card-badge">古装</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">王国 第三季</h3>
+            <p class="card-desc">朝鲜王朝背景的丧尸题材，宫斗权谋与疫情扩散双线推进。制作水准与历史细节考究。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">韩剧</span>
+              <span class="tag">历史</span>
+              <span class="tag">惊悚</span>
+            </div>
+            <div class="card-meta">
+              <span>预计 12 月上线</span>
+              <span class="rating">9.0</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/love-next-door/400/300" alt="背着善宰跑剧照" width="400" height="300" loading="lazy">
+            <span class="card-badge">甜宠</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">背着善宰跑</h3>
+            <p class="card-desc">粉丝穿越回过去拯救偶像的双向救赎故事。青春校园与娱乐圈生态结合，口碑逆袭。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">韩剧</span>
+              <span class="tag">穿越</span>
+              <span class="tag">青春</span>
+            </div>
+            <div class="card-meta">
+              <span>已完结 · 16 集</span>
+              <span class="rating">8.5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/severance-s2/400/300" alt="人生切割术第二季剧照" width="400" height="300" loading="lazy">
+            <span class="card-badge">科幻</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">人生切割术 第二季</h3>
+            <p class="card-desc">记忆分割实验的后续影响扩大，卢蒙公司的秘密进一步揭开。冷峻美学与职场隐喻。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">美剧</span>
+              <span class="tag">惊悚</span>
+              <span class="tag">职场</span>
+            </div>
+            <div class="card-meta">
+              <span>11 月 8 日更新</span>
+              <span class="rating">9.2</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <div class="card-thumb">
+            <img src="https://picsum.photos/seed/solo-kitchen/400/300" alt="独居厨房综艺海报" width="400" height="300" loading="lazy">
+            <span class="card-badge">综艺</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">独居厨房</h3>
+            <p class="card-desc">明星独居生活与一人食料理结合的观察类综艺。轻松氛围适合下饭观看。</p>
+            <div class="card-tags">
+              <span class="tag tag-primary">综艺</span>
+              <span class="tag">美食</span>
+              <span class="tag">治愈</span>
+            </div>
+            <div class="card-meta">
+              <span>每周五更新</span>
+              <span class="rating">8.0</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. 最新更新 -->
+    <section class="section" id="updates">
+      <div class="section-header">
+        <h2 class="section-title">最新更新动态</h2>
+        <span class="section-subtitle">截至 2026 年 11 月 8 日</span>
+      </div>
+      <ul class="update-list">
+        <li class="update-item">
+          <span class="update-time">今天 09:30</span>
+          <span class="update-title">怪奇物语 第五季</span>
+          <span class="update-summary">第 2 集已上线，单集时长 65 分钟</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">今天 08:15</span>
+          <span class="update-title">人生切割术 第二季</span>
+          <span class="update-summary">第 4 集更新，卢蒙公司新部门亮相</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">昨天 21:10</span>
+          <span class="update-title">黑暗荣耀 第三季</span>
+          <span class="update-summary">全 8 集上线，大结局讨论热度破圈</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">昨天 18:40</span>
+          <span class="update-title">重启人生 特别篇</span>
+          <span class="update-summary">番外篇第 2 话上线，聚焦闺蜜组日常</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">11 月 6 日</span>
+          <span class="update-title">泪之女王</span>
+          <span class="update-summary">导演剪辑版新增 12 分钟未播片段</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">11 月 5 日</span>
+          <span class="update-title">王国 第三季</span>
+          <span class="update-summary">首支正式预告发布，定档 12 月 19 日</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">11 月 4 日</span>
+          <span class="update-title">独居厨房</span>
+          <span class="update-summary">第 9 期上线，嘉宾挑战一人火锅</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">11 月 3 日</span>
+          <span class="update-title">背着善宰跑</span>
+          <span class="update-summary">特别剪辑版上线，追加演唱会幕后</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">11 月 2 日</span>
+          <span class="update-title">黑暗荣耀 第三季</span>
+          <span class="update-summary">制作发布会举行，主创谈结局设计</span>
+        </li>
+        <li class="update-item">
+          <span class="update-time">11 月 1 日</span>
+          <span class="update-title">怪奇物语 第五季</span>
+          <span class="update-summary">第 1 集上线，首日播放量创平台纪录</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 4. 分类入口 -->
+    <section class="section" id="categories">
+      <div class="section-header">
+        <h2 class="section-title">按类型找剧</h2>
+        <span class="section-subtitle">8 个常用分类</span>
+      </div>
+      <div class="category-grid">
+        <a class="category-chip" href="#featured">
+          <span class="category-name">悬疑推理</span>
+          <span class="category-desc">怪奇物语 · 黑暗荣耀</span>
+        </a>
+        <a class="category-chip" href="#featured">
+          <span class="category-name">爱情甜宠</span>
+          <span class="category-desc">泪之女王 · 背着善宰跑</span>
+        </a>
+        <a class="category-chip" href="#featured">
+          <span class="category-name">古装历史</span>
+          <span class="category-desc">王国 · 锦绣未央</span>
+        </a>
+        <a class="category-chip" href="#featured">
+          <span class="category-name">科幻奇幻</span>
+          <span class="category-desc">人生复本 · 重启人生</span>
+        </a>
+        <a class="category-chip" href="#featured">
+          <span class="category-name">职场剧情</span>
+          <span class="category-desc">人生切割术 · 未生</span>
+        </a>
+        <a class="category-chip" href="#featured">
+          <span class="category-name">喜剧治愈</span>
+          <span class="category-desc">独居厨房 · 机智医生</span>
+        </a>
+        <a class="category-chip" href="#featured">
+          <span class="category-name">英剧短剧</span>
+          <span class="category-desc">黑镜 · 伦敦生活</span>
+        </a>
+        <a class="category-chip" href="#featured">
+          <span class="category-name">泰剧青春</span>
+          <span class="category-desc">假偶天成 · 禁忌女孩</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. 深度解析 -->
+    <section class="section deep-dive" id="deep-dive">
+      <div class="section-header">
+        <h2 class="section-title">深度解析：剧集类型差异与选择依据</h2>
+      </div>
+
+      <h3>美剧与韩剧的叙事节奏差异</h3>
+      <p>
+        美剧通常采用季播制，每季 8—12 集，单集 45—60 分钟，首集投入较高制作成本用于建立世界观。韩剧多为 16 集制，每周更新两集，单集 60—70 分钟，情感线推进密度更高。以《怪奇物语》第五季与《黑暗荣耀》第三季为例：前者用前两集完成多线铺垫与悬念设置，后者在首周两集内即进入复仇行动的核心冲突。选择时，偏好慢热世界观构建的观众更适合美剧，偏好快速情感反馈的观众可优先考虑韩剧。
+      </p>
+
+      <h3>悬疑、复仇、甜宠三类题材的评判维度</h3>
+      <p>
+        悬疑类作品的核心判断标准是线索回收率与逻辑自洽度。《怪奇物语》系列以“颠倒世界”设定为锚点，每一季末需要解答上一季遗留的关键疑问，若线索铺垫充分则观众满意度较高。复仇类作品如《黑暗荣耀》第三季，评判重点在于加害者与受害者的力量对比变化是否合理、报复手段是否与人物能力匹配。甜宠类如《泪之女王》《背着善宰跑》，则看情感推进节奏是否自然、主角互动是否具有辨识度，而非单纯依赖巧合推动。
+      </p>
+
+      <h3>日剧与泰剧的观看门槛</h3>
+      <p>
+        日剧单季 10—11 集，每集 45 分钟，题材偏好社会议题与生活流叙事，如《重启人生》以轮回设定包裹日常选择讨论。泰剧单集时长较短（40—50 分钟），更新频率高（每周 3—4 集），青春校园与虐恋题材占比较大。初次接触日剧的观众可从《重启人生》特别篇入手，熟悉其轻喜剧与生活细节并重的风格；泰剧则可从《禁忌女孩》等单元剧结构作品开始，降低连续追剧的负担。
+      </p>
+
+      <h3>综艺与剧集的观看场景区分</h3>
+      <p>
+        剧集需要连续投入时间，适合晚间或周末集中观看；综艺如《独居厨房》采用单元式结构，单集独立性强，适合碎片化时间。若以“下饭”为主要场景，优先选择单集 30—50 分钟、话题轻松的综艺或情景喜剧；若以沉浸式追剧为目标，则应按类型选择季播剧或短剧，并提前确认更新进度。
+      </p>
+
+      <ul>
+        <li><strong>更新进度确认</strong>：先查看条目详情页的更新状态（全季上线 / 每周更新 / 待定档），避免追到一半等待。</li>
+        <li><strong>评分与口碑交叉参考</strong>：豆瓣开分、IMDb 评分与社交平台讨论热度三项指标交叉比对，减少单一评分偏差。</li>
+        <li><strong>同类型对比</strong>：悬疑类作品优先看线索回收评价，爱情类作品优先看角色互动自然度。</li>
+        <li><strong>观看顺序</strong>：多季作品从第一季开始；单元剧可随机切入；特别篇建议在正片之后观看。</li>
+      </ul>
+    </section>
+
+    <!-- 6. 体验指南 -->
+    <section class="section" id="guide">
+      <div class="section-header">
+        <h2 class="section-title">观看路径与选择指南</h2>
+        <span class="section-subtitle">从类型偏好到具体条目</span>
+      </div>
+      <ol class="guide-steps">
+        <li class="guide-step">
+          <span class="step-num"></span>
+          <div class="step-content">
+            <h4>先确定观看场景与时间预算</h4>
+            <p>若每晚可投入 1—2 小时，优先选择周更剧集（如美剧、日剧），按更新节奏追看；若只有碎片时间，可从综艺或单元剧（如《独居厨房》《禁忌女孩》）切入。</p>
+          </div>
+        </li>
+        <li class="guide-step">
+          <span class="step-num"></span>
+          <div class="step-content">
+            <h4>按类型锁定 2—3 部候选作品</h4>
+            <p>悬疑类可关注《怪奇物语》第五季、《黑暗荣耀》第三季；爱情类关注《泪之女王》《背着善宰跑》；治愈类关注《重启人生》特别篇。同时保留一部备选，避免追剧进度断档。</p>
+          </div>
+        </li>
+        <li class="guide-step">
+          <span class="step-num"></span>
+          <div class="step-content">
+            <h4>查看更新进度与集数</h4>
+            <p>确认候选作品是完结状态还是连载中。已完结作品可连续观看，连载作品需关注每周更新时间。例如《黑暗荣耀》第三季已全季上线，《怪奇物语》第五季为每周更新。</p>
+          </div>
+        </li>
+        <li class="guide-step">
+          <span class="step-num"></span>
+          <div class="step-content">
+            <h4>交叉参考评分与评论</h4>
+            <p>优先查看带有具体情节讨论的评论，而非仅看总分。悬疑类作品重点关注“线索回收”“结局是否合理”等关键词；爱情类作品关注“角色互动”“情感推进”等评价。</p>
+          </div>
+        </li>
+        <li class="guide-step">
+          <span class="step-num"></span>
+          <div class="step-content">
+            <h4>观看后决定是否延伸同类型</h4>
+            <p>若喜欢《黑暗荣耀》的复仇叙事，可延伸至《王国》第三季；若喜欢《重启人生》的生活流，可延伸至《独居厨房》等治愈综艺。按此路径逐步扩展观看列表。</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="section" id="faq">
+      <div class="section-header">
+        <h2 class="section-title">常见问题</h2>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>美剧一般多久更新一集？</summary>
+          <div class="faq-answer">多数美剧采用周更模式，每周更新 1 集，集中在周三至周五上线。部分平台会在首周放出 2—3 集，后续恢复周更。例如《怪奇物语》第五季目前为每周更新 1 集。</div>
+        </details>
+        <details>
+          <summary>《黑暗荣耀》和《怪奇物语》有什么区别？</summary>
+          <div class="faq-answer">两者类型与叙事重心不同。《黑暗荣耀》为韩式复仇剧，聚焦校园暴力受害者的系统性复仇，情感张力与人物关系密度较高；《怪奇物语》为美式科幻悬疑剧，以颠倒世界设定、多角色群像与 80 年代怀旧美学为核心，世界观构建更复杂。</div>
+        </details>
+        <details>
+          <summary>第一次看韩剧，从哪部开始比较好？</summary>
+          <div class="faq-answer">若偏好快节奏复仇叙事，可从《黑暗荣耀》第三季入手；若偏好轻松甜宠，可从《泪之女王》或《背着善宰跑》开始。前者情感浓度高，后者节奏轻快、篇幅适中，适合初次接触韩剧的观众。</div>
+        </details>
+        <details>
+          <summary>悬疑类剧集的评判标准通常是什么？</summary>
+          <div class="faq-answer">主要看三点：线索铺垫是否充分且可回溯、结局是否回收了前期核心悬念、人物行为动机是否与线索匹配。观众评论中常提到的“逻辑自洽”“伏笔回收”是判断悬疑剧质量的关键指标。</div>
+        </details>
+        <details>
+          <summary>日剧和泰剧在观看节奏上有什么不同？</summary>
+          <div class="faq-answer">日剧通常每周更新 1 集，单季 10—11 集，适合按周追看；泰剧更新频率更高（每周 3—4 集），单集时长较短，适合集中补剧。日剧更注重生活细节与社会议题，泰剧则在青春校园与虐恋题材上占比较大。</div>
+        </details>
+        <details>
+          <summary>《重启人生》特别篇需要先看正片吗？</summary>
+          <div class="faq-answer">建议先观看正片《重启人生》全 10 集，再观看特别篇。特别篇包含正片角色的后续生活与配角视角展开，部分情节与正片中的选择形成呼应，直接观看会损失一定理解与情感共鸣。</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 8. 用户评论 -->
+    <section class="section" id="comments">
+      <div class="section-header">
+        <h2 class="section-title">用户评论</h2>
+        <span class="section-subtitle">来自剧集讨论区</span>
+      </div>
+      <div class="comment-list">
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">追剧小张</span><span class="comment-date">11 月 8 日</span></div>
+          <p class="comment-text">怪奇物语第五季第二集节奏比第一集快很多，麦克斯的戏份终于展开了，等了两年的线终于收回来。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">首尔下雨天</span><span class="comment-date">11 月 7 日</span></div>
+          <p class="comment-text">黑暗荣耀第三季的法庭戏拍得克制，没有过度煽情，文东恩最后的选择个人觉得合理，复仇线收得干净。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">爱看日剧的猫</span><span class="comment-date">11 月 6 日</span></div>
+          <p class="comment-text">重启人生特别篇第二话太好哭了，配角视角反而比正片更戳人，麻美和真理的友情线补完整了。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">甜剧收割机</span><span class="comment-date">11 月 5 日</span></div>
+          <p class="comment-text">泪之女王导演剪辑版加的那段吵架戏很真实，夫妻之间就是这种细碎的摩擦，比正片还好看。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">悬疑老饕</span><span class="comment-date">11 月 4 日</span></div>
+          <p class="comment-text">人生切割术第二季第 4 集信息量好大，卢蒙公司的新部门明显在暗示记忆分割的升级版，期待后面收线。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">泰剧入门生</span><span class="comment-date">11 月 3 日</span></div>
+          <p class="comment-text">禁忌女孩每集独立故事挺适合通勤看的，一集 40 多分钟刚刚好，不会追到心累。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">王国守夜人</span><span class="comment-date">11 月 2 日</span></div>
+          <p class="comment-text">王国第三季预告里宫殿场景明显升级了，希望这一季能把丧尸起源的坑填上，前两季留下的伏笔太多了。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">下饭综艺党</span><span class="comment-date">11 月 1 日</span></div>
+          <p class="comment-text">独居厨房第 9 期嘉宾做火锅那段太真实了，一个人吃火锅确实是当代独居青年的常态，治愈感拉满。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">背着善宰跑十级学者</span><span class="comment-date">10 月 31 日</span></div>
+          <p class="comment-text">特别剪辑版新增的演唱会幕后好甜，善宰和小率的互动比正片还自然，希望出个第二季。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">英剧短篇控</span><span class="comment-date">10 月 30 日</span></div>
+          <p class="comment-text">黑镜新一季还没出，先把伦敦生活翻出来重看，菲比·沃勒-布里奇的剧本功力确实强，两季都值得反复看。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">理性看剧人</span><span class="comment-date">10 月 29 日</span></div>
+          <p class="comment-text">泪之女王前期有点慢热，第八集之后才进入状态，建议新观众至少看到第六集再决定要不要继续。</p>
+        </div>
+        <div class="comment-item">
+          <div class="comment-head"><span class="comment-user">工作日熬夜冠军</span><span class="comment-date">10 月 28 日</span></div>
+          <p class="comment-text">怪奇物语第五季的 80 年代美术还是那么稳，霍金斯小镇的布景细节比前几季更丰富了。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 相关资讯 -->
+    <section class="section" id="news">
+      <div class="section-header">
+        <h2 class="section-title">相关资讯</h2>
+        <span class="section-subtitle">剧集动态与类型趋势</span>
+      </div>
+      <ul class="news-list">
+        <li class="news-item">
+          <div class="news-thumb">
+            <img src="https://picsum.photos/seed/stranger-s5-news/600/400" alt="怪奇物语第五季上线资讯配图" width="600" height="400" loading="lazy">
+          </div>
+          <div class="news-content">
+            <h3 class="news-title"><a href="#featured">怪奇物语第五季首集上线，首日播放量创平台纪录</a></h3>
+            <p class="news-summary">11 月 1 日首集上线后，平台单日播放量刷新剧集类纪录，第二集已于 11 月 8 日更新。</p>
+            <div class="news-date">2026-11-08</div>
+          </div>
+        </li>
+        <li class="news-item">
+          <div class="news-thumb">
+            <img src="https://picsum.photos/seed/dark-glory-final/600/400" alt="黑暗荣耀第三季大结局讨论配图" width="600" height="400" loading="lazy">
+          </div>
+          <div class="news-content">
+            <h3 class="news-title"><a href="#featured">黑暗荣耀第三季全季上线，大结局引发复仇叙事讨论</a></h3>
+            <p class="news-summary">11 月 2 日全 8 集上线，观众围绕“复仇的边界”展开讨论，社交平台话题阅读量持续攀升。</p>
+            <div class="news-date">2026-11-07</div>
+          </div>
+        </li>
+        <li class="news-item">
+          <div class="news-thumb">
+            <img src="https://picsum.photos/seed/kingdom-s3-trailer/600/400" alt="王国第三季预告发布配图" width="600" height="400" loading="lazy">
+          </div>
+          <div class="news-content">
+            <h3 class="news-title"><a href="#featured">王国第三季定档 12 月 19 日，首支预告公开</a></h3>
+            <p class="news-summary">11 月 5 日发布正式预告，新一季将聚焦丧尸起源与宫廷权力更迭，制作规模进一步升级。</p>
+            <div class="news-date">2026-11-05</div>
+          </div>
+        </li>
+        <li class="news-item">
+          <div class="news-thumb">
+            <img src="https://picsum.photos/seed/rebirth-special-news/600/400" alt="重启人生特别篇上线配图" width="600" height="400" loading="lazy">
+          </div>
+          <div class="news-content">
+            <h3 class="news-title"><a href="#featured">重启人生特别篇上线，番外视角补完配角故事</a></h3>
+            <p class="news-summary">11 月 5 日特别篇第 1 话上线，以配角视角展开新剧情，延续正片轻喜剧与生活流风格。</p>
+            <div class="news-date">2026-11-05</div>
+          </div>
+        </li>
+        <li class="news-item">
+          <div class="news-thumb">
+            <img src="https://picsum.photos/seed/severance-s2-update/600/400" alt="人生切割术第二季更新配图" width="600" height="400" loading="lazy">
+          </div>
+          <div class="news-content">
+            <h3 class="news-title"><a href="#featured">人生切割术第二季更新至第 4 集，新部门设定引发猜测</a></h3>
+            <p class="news-summary">11 月 8 日第 4 集上线，卢蒙公司新部门亮相，观众围绕记忆分割实验的后续展开讨论。</p>
+            <div class="news-date">2026-11-08</div>
+          </div>
+        </li>
+        <li class="news-item">
+          <div class="news-thumb">
+            <img src="https://picsum.photos/seed/solo-kitchen-ep9/600/400" alt="独居厨房第九期上线配图" width="600" height="400" loading="lazy">
+          </div>
+          <div class="news-content">
+            <h3 class="news-title"><a href="#featured">独居厨房第 9 期上线，一人火锅成讨论焦点</a></h3>
+            <p class="news-summary">11 月 4 日更新，嘉宾挑战一人火锅料理，弹幕与评论区围绕独居饮食场景展开热议。</p>
+            <div class="news-date">2026-11-04</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 10. 相关推荐 -->
+    <section class="section" id="related">
+      <div class="section-header">
+        <h2 class="section-title">相关推荐方向</h2>
+      </div>
+      <div class="tag-index">
+        <a class="tag-pill" href="#featured">怪奇物语前四季回顾</a>
+        <a class="tag-pill" href="#featured">黑暗荣耀编剧新作</a>
+        <a class="tag-pill" href="#featured">重启人生时间线整理</a>
+        <a class="tag-pill" href="#featured">泪之女王导演剪辑版对比</a>
+        <a class="tag-pill" href="#featured">王国丧尸设定梳理</a>
+        <a class="tag-pill" href="#featured">背着善宰跑 OST 歌单</a>
+        <a class="tag-pill" href="#featured">人生切割术职场隐喻</a>
+        <a class="tag-pill" href="#featured">独居厨房往期料理合集</a>
+      </div>
+    </section>
+
+    <!-- 11. 补充板块：热门榜单 -->
+    <section class="section" id="ranking">
+      <div class="section-header">
+        <h2 class="section-title">本周热门剧集榜</h2>
+        <span class="section-subtitle">基于站内讨论热度</span>
+      </div>
+      <ol class="rank-list">
+        <li class="rank-item">
+          <span class="rank-num">1</span>
+          <span class="rank-name"><a href="#featured">怪奇物语 第五季</a></span>
+          <span class="rank-meta">热度 9.8</span>
+        </li>
+        <li class="rank-item">
+          <span class="rank-num">2</span>
+          <span class="rank-name"><a href="#featured">黑暗荣耀 第三季</a></span>
+          <span class="rank-meta">热度 9.6</span>
+        </li>
+        <li class="rank-item">
+          <span class="rank-num">3</span>
+          <span class="rank-name"><a href="#featured">人生切割术 第二季</a></span>
+          <span class="rank-meta">热度 9.3</span>
+        </li>
+        <li class="rank-item">
+          <span class="rank-num">4</span>
+          <span class="rank-name"><a href="#featured">重启人生 特别篇</a></span>
+          <span class="rank-meta">热度 8.9</span>
+        </li>
+        <li class="rank-item">
+          <span class="rank-num">5</span>
+          <span class="rank-name"><a href="#featured">泪之女王 导演剪辑版</a></span>
+          <span class="rank-meta">热度 8.7</span>
+        </li>
+        <li class="rank-item">
+          <span class="rank-num">6</span>
+          <span class="rank-name"><a href="#featured">王国 第三季（预告）</a></span>
+          <span class="rank-meta">热度 8.5</span>
+        </li>
+        <li class="rank-item">
+          <span class="rank-num">7</span>
+          <span class="rank-name"><a href="#featured">背着善宰跑 特别剪辑版</a></span>
+          <span class="rank-meta">热度 8.2</span>
+        </li>
+        <li class="rank-item">
+          <span class="rank-num">8</span>
+          <span class="rank-name"><a href="#featured">独居厨房 第 9 期</a></span>
+          <span class="rank-meta">热度 7.9</span>
+        </li>
+      </ol>
+    </section>
+
+  </main>
+
+  <!-- 右辅助栏 -->
+  <aside class="right-sidebar" aria-label="辅助信息">
+    <div class="sidebar-panel">
+      <h3 class="sidebar-title">今日更新速览</h3>
+      <ul class="update-stream">
+        <li>
+          <span class="us-name">怪奇物语 第五季</span>
+          <span class="us-desc">第 2 集 · 今天 09:30</span>
+        </li>
+        <li>
+          <span class="us-name">人生切割术 第二季</span>
+          <span class="us-desc">第 4 集 · 今天 08:15</span>
+        </li>
+        <li>
+          <span class="us-name">黑暗荣耀 第三季</span>
+          <span class="us-desc">全 8 集 · 昨天 21:10</span>
+        </li>
+        <li>
+          <span class="us-name">重启人生 特别篇</span>
+          <span class="us-desc">第 2 话 · 昨天 18:40</span>
+        </li>
+        <li>
+          <span class="us-name">独居厨房</span>
+          <span class="us-desc">第 9 期 · 11 月 4 日</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-panel">
+      <h3 class="sidebar-title">高分口碑剧集</h3>
+      <ul class="sidebar-list">
+        <li><span class="sl-index">01</span><span class="sl-name"><a href="#featured">怪奇物语 第五季</a></span><span class="sl-tag">9.3</span></li>
+        <li><span class="sl-index">02</span><span class="sl-name"><a href="#featured">人生切割术 第二季</a></span><span class="sl-tag">9.2</span></li>
+        <li><span class="sl-index">03</span><span class="sl-name"><a href="#featured">黑暗荣耀 第三季</a></span><span class="sl-tag">9.1</span></li>
+        <li><span class="sl-index">04</span><span class="sl-name"><a href="#featured">王国 第三季</a></span><span class="sl-tag">9.0</span></li>
+        <li><span class="sl-index">05</span><span class="sl-name"><a href="#featured">重启人生 特别篇</a></span><span class="sl-tag">8.9</span></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-panel">
+      <h3 class="sidebar-title">类型快速索引</h3>
+      <div class="tag-index" style="gap:6px;">
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">悬疑</a>
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">复仇</a>
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">甜宠</a>
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">古装</a>
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">科幻</a>
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">治愈</a>
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">综艺</a>
+        <a class="tag-pill" href="#categories" style="font-size:12px;padding:3px 10px;">职场</a>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- 页尾 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <svg class="brand-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#b83a2c"/>
+            <path d="M10 9h4v14h-4z" fill="#fff"/>
+            <path d="M18 9h4l-4 14h-4z" fill="#fff" opacity="0.75"/>
+            <circle cx="25" cy="9" r="2" fill="#f0c060"/>
+          </svg>
+          <span class="brand-text">人人视频网页版入口</span>
+        </div>
+        <p class="footer-desc">聚合美剧、韩剧、日剧、泰剧与综艺等剧集条目，提供类型分类、更新动态、评分参考与观看顺序建议。</p>
+      </div>
+      <div class="footer-col">
+        <h4>热门类型</h4>
+        <ul>
+          <li><a href="#categories">悬疑推理剧集</a></li>
+          <li><a href="#categories">爱情甜宠剧集</a></li>
+          <li><a href="#categories">古装历史剧集</a></li>
+          <li><a href="#categories">科幻奇幻剧集</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>热门条目</h4>
+        <ul>
+          <li><a href="#featured">怪奇物语 第五季</a></li>
+          <li><a href="#featured">黑暗荣耀 第三季</a></li>
+          <li><a href="#featured">重启人生 特别篇</a></li>
+          <li><a href="#featured">人生切割术 第二季</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>快速导航</h4>
+        <ul>
+          <li><a href="#overview">领域概览</a></li>
+          <li><a href="#updates">最新更新</a></li>
+          <li><a href="#faq">常见问题</a></li>
+          <li><a href="#news">相关资讯</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 人人视频网页版入口 · 内容聚合展示</span>
+      <span>部分内容为示例数据，仅用于展示页面结构</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+  </html>
