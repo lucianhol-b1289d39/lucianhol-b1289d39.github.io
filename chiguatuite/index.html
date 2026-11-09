@@ -1,0 +1,2188 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吃瓜推特大赛 - 热门事件与话题聚合</title>
+  <meta name="description" content="吃瓜推特大赛聚合推特上最热门的争议事件、搞笑翻车和神回复现场，提供每日大赛焦点、参赛作品精选、实时热榜和吃瓜群众评论，适合想快速跟上网络热点节奏的网友浏览。">
+  <meta name="keywords" content="推特热门话题, 网络争议事件, 搞笑翻车现场, 网友神回复, 吃瓜群众评论">
+  <style>
+    /* ---------- 全局变量与重置 ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f8f5f0;
+      --surface: #ffffff;
+      --surface-soft: #fefcf9;
+      --border: #e6dfd6;
+      --text: #241f1c;
+      --text-secondary: #5f5a55;
+      --text-muted: #8b857e;
+      --primary: #b44a3c;
+      --primary-soft: #f7e8e5;
+      --primary-dark: #8f372b;
+      --accent: #e6b422;
+      --accent-soft: #fdf6e3;
+      --success: #3b7a57;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+      --sticky-top: 104px; /* 公告条(36px) + 页头(68px) = 104px */
+    }
+
+    html {
+      scroll-padding-top: var(--sticky-top);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      font-size: 15px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    ul, ol {
+      list-style: none;
+    }
+
+    /* ---------- 吸顶公告条 ---------- */
+    .announce-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary-dark);
+      color: #fef7f4;
+      font-size: 13px;
+      padding: 0 20px;
+      height: 36px;
+      line-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      letter-spacing: 0.3px;
+    }
+
+    .announce-bar strong {
+      font-weight: 600;
+      color: #ffe9a8;
+    }
+
+    .announce-bar .dot {
+      width: 4px;
+      height: 4px;
+      background: #ffe9a8;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ---------- 吸顶页头 ---------- */
+    .site-header {
+      position: sticky;
+      top: 36px;
+      z-index: 99;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      height: 68px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand svg {
+      width: 34px;
+      height: 34px;
+    }
+
+    .brand-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .brand-text span {
+      color: var(--primary);
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .header-nav a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    .header-nav a:hover {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      text-decoration: none;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .search-btn {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .search-btn:hover {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .search-btn svg {
+      width: 14px;
+      height: 14px;
+      vertical-align: -2px;
+      margin-right: 4px;
+    }
+
+    /* ---------- 主容器三栏布局 ---------- */
+    .page-wrap {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 24px 24px 40px;
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) 240px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ---------- 左频道索引 ---------- */
+    .channel-sidebar {
+      position: sticky;
+      top: var(--sticky-top);
+      align-self: start;
+    }
+
+    .channel-nav {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 16px 0;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+
+    .channel-nav h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      padding: 0 18px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .channel-nav ul li a {
+      display: block;
+      padding: 8px 18px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+      font-weight: 500;
+    }
+
+    .channel-nav ul li a:hover,
+    .channel-nav ul li a.active {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      border-left-color: var(--primary);
+      text-decoration: none;
+    }
+
+    .channel-nav .channel-footer {
+      margin-top: 16px;
+      padding: 12px 18px 0;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ---------- 中栏主内容 ---------- */
+    .main-content {
+      min-width: 0;
+    }
+
+    /* ---------- 右辅助栏 ---------- */
+    .aux-sidebar {
+      position: sticky;
+      top: var(--sticky-top);
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .aux-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+
+    .aux-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .aux-card h3 .emoji {
+      font-size: 16px;
+    }
+
+    .hot-list li {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 13px;
+      align-items: baseline;
+    }
+
+    .hot-list li:last-child {
+      border-bottom: none;
+    }
+
+    .hot-list .rank {
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 18px;
+      font-size: 12px;
+    }
+
+    .hot-list .rank.top {
+      color: var(--primary);
+    }
+
+    .hot-list .item-name {
+      font-weight: 500;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .hot-list .hot-value {
+      color: var(--text-muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .update-stream li {
+      font-size: 13px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0ebe4;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 8px;
+    }
+
+    .update-stream li:last-child {
+      border-bottom: none;
+    }
+
+    .update-stream .time {
+      color: var(--text-muted);
+      font-size: 11px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ---------- 首屏主题区 ---------- */
+    .hero {
+      background: linear-gradient(135deg, #fff9f5 0%, #fef3ed 100%);
+      border-radius: var(--radius-lg);
+      padding: 32px 32px 28px;
+      margin-bottom: 28px;
+      border: 1px solid #f0e0d8;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .hero-content {
+      flex: 1 1 320px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: 20px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 28px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid #d4c9be;
+      padding: 9px 20px;
+      border-radius: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: #fff;
+      text-decoration: none;
+      color: var(--primary-dark);
+    }
+
+    .hero-visual {
+      flex: 0 0 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+    }
+
+    /* ---------- 通用板块 ---------- */
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .section-header h2 .count {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+
+    .section-header .more-link {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dashed #ccc;
+      padding-bottom: 1px;
+    }
+
+    .section-header .more-link:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+      text-decoration: none;
+    }
+
+    .intro-text {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .intro-text p + p {
+      margin-top: 14px;
+    }
+
+    .intro-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ---------- 卡片网格 ---------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: #f0ebe4;
+    }
+
+    .card-body {
+      padding: 14px 16px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-type {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      align-self: flex-start;
+      letter-spacing: 0.3px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px solid #f5f0ea;
+    }
+
+    .card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .tag {
+      font-size: 11px;
+      background: #f5f0ea;
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    /* ---------- 最新更新列表 ---------- */
+    .update-list {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .update-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 20px;
+      border-bottom: 1px solid #f2ede7;
+      transition: background 0.15s;
+    }
+
+    .update-item:last-child {
+      border-bottom: none;
+    }
+
+    .update-item:hover {
+      background: var(--surface-soft);
+    }
+
+    .update-time {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 70px;
+      font-variant-numeric: tabular-nums;
+      padding-top: 1px;
+    }
+
+    .update-content {
+      flex: 1;
+    }
+
+    .update-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .update-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .update-badge {
+      font-size: 10px;
+      background: var(--accent-soft);
+      color: #8a6d1b;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+      margin-left: 6px;
+    }
+
+    /* ---------- 分类入口 ---------- */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .category-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 14px;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .category-item:hover {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      text-decoration: none;
+    }
+
+    .category-item .cat-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .category-item .cat-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .category-item .cat-count {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ---------- 深度解析 ---------- */
+    .deep-dive {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 28px 30px;
+      border: 1px solid var(--border);
+    }
+
+    .deep-dive h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 22px 0 10px;
+      padding-left: 12px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .deep-dive h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .deep-dive p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .deep-dive ul {
+      margin: 8px 0 14px 20px;
+      list-style: disc;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .deep-dive ul li {
+      margin-bottom: 4px;
+    }
+
+    .deep-dive ul li strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ---------- 体验指南步骤 ---------- */
+    .guide-steps {
+      counter-reset: step;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .guide-step {
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      padding: 16px 20px 16px 56px;
+      position: relative;
+      counter-increment: step;
+    }
+
+    .guide-step::before {
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 26px;
+      height: 26px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .guide-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .guide-step p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .faq-list details {
+      border-bottom: 1px solid #f0ebe4;
+    }
+
+    .faq-list details:last-child {
+      border-bottom: none;
+    }
+
+    .faq-list summary {
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: background 0.15s;
+    }
+
+    .faq-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-list summary::after {
+      content: "＋";
+      font-size: 16px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-list details[open] summary::after {
+      content: "－";
+    }
+
+    .faq-list summary:hover {
+      background: var(--surface-soft);
+    }
+
+    .faq-list .faq-answer {
+      padding: 0 20px 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* ---------- 用户评论 ---------- */
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .comment-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .comment-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comment-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .comment-name {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .comment-time {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    .comment-text {
+      color: var(--text-secondary);
+    }
+
+    .comment-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ---------- 相关资讯 ---------- */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .news-item {
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .news-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .news-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .news-summary {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ---------- 相关推荐 ---------- */
+    .related-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .related-tags a {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .related-tags a:hover {
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      text-decoration: none;
+    }
+
+    /* ---------- 补充：热门榜单时间线 ---------- */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 18px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -21px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 2px solid var(--surface);
+      box-shadow: 0 0 0 2px var(--primary-soft);
+    }
+
+    .timeline-date {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .timeline-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ---------- 页脚 ---------- */
+    .site-footer {
+      background: #2d2622;
+      color: #d4ccc4;
+      padding: 40px 24px 24px;
+      margin-top: 20px;
+    }
+
+    .footer-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 32px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-brand .brand-text {
+      color: #f0ebe4;
+      font-size: 18px;
+    }
+
+    .footer-brand .brand-text span {
+      color: #e6b422;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #a99f96;
+    }
+
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f0ebe4;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 6px;
+    }
+
+    .footer-col ul li a {
+      color: #a99f96;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .footer-col ul li a:hover {
+      color: #e6b422;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      max-width: 1380px;
+      margin: 24px auto 0;
+      padding-top: 18px;
+      border-top: 1px solid #4a403a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: #8b827a;
+    }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 1100px) {
+      .page-wrap {
+        grid-template-columns: 160px minmax(0, 1fr) 220px;
+        gap: 20px;
+      }
+      .hero h1 {
+        font-size: 28px;
+      }
+      .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .page-wrap {
+        grid-template-columns: 1fr 260px;
+        gap: 22px;
+      }
+      .channel-sidebar {
+        display: none;
+      }
+      .header-nav {
+        display: none;
+      }
+      .hero h1 {
+        font-size: 26px;
+      }
+      .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 740px) {
+      :root {
+        --sticky-top: 96px;
+      }
+      .announce-bar {
+        font-size: 11px;
+        padding: 0 12px;
+        gap: 6px;
+        height: 32px;
+        line-height: 32px;
+      }
+      .site-header {
+        top: 32px;
+        height: 64px;
+      }
+      .header-inner {
+        padding: 0 16px;
+        gap: 12px;
+      }
+      .brand-text {
+        font-size: 17px;
+      }
+      .brand svg {
+        width: 28px;
+        height: 28px;
+      }
+      .page-wrap {
+        grid-template-columns: 1fr;
+        padding: 16px 16px 32px;
+        gap: 20px;
+      }
+      .main-content {
+        order: 1;
+      }
+      .aux-sidebar {
+        order: 2;
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .hero {
+        padding: 22px 20px;
+      }
+      .hero h1 {
+        font-size: 24px;
+      }
+      .hero p {
+        font-size: 14px;
+      }
+      .hero-visual {
+        flex: 0 0 140px;
+      }
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .card-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .card-body {
+        padding: 10px 12px 12px;
+      }
+      .card-title {
+        font-size: 13px;
+      }
+      .comment-grid {
+        grid-template-columns: 1fr;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .deep-dive {
+        padding: 20px 18px;
+      }
+      .update-item {
+        flex-direction: column;
+        gap: 4px;
+        padding: 12px 16px;
+      }
+      .update-time {
+        min-width: auto;
+      }
+      .intro-text {
+        padding: 18px 20px;
+      }
+      .guide-step {
+        padding: 14px 16px 14px 48px;
+      }
+      .guide-step::before {
+        left: 14px;
+        top: 14px;
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .aux-sidebar {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        font-size: 22px;
+      }
+    }
+
+    /* 可见焦点样式 */
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* 搜索无结果提示 */
+    .no-result {
+      padding: 16px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      display: none;
+    }
+    .no-result.show {
+      display: block;
+    }
+    .hidden-by-search {
+      display: none !important;
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- ========== 吸顶公告条 ========== -->
+  <div class="announce-bar">
+    <strong>🔥 今日大赛焦点</strong>
+    <span class="dot"></span>
+    <span>“深夜食堂账单”事件新增 3 条神回复</span>
+    <span class="dot"></span>
+    <span>“地铁判官”视频播放破 2000 万</span>
+  </div>
+
+  <!-- ========== 吸顶页头 ========== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/#top" class="brand" style="text-decoration:none;">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18" stroke="#b44a3c" stroke-width="2.5" fill="#fdf6f4"/>
+          <path d="M12 16 C12 16, 15 12, 20 12 C25 12, 28 16, 28 16" stroke="#b44a3c" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <circle cx="16" cy="18" r="1.8" fill="#b44a3c"/>
+          <circle cx="24" cy="18" r="1.8" fill="#b44a3c"/>
+          <path d="M15 24 Q20 29 25 24" stroke="#b44a3c" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <circle cx="30" cy="10" r="3" fill="#e6b422"/>
+        </svg>
+        <span class="brand-text">吃瓜推特<span>大赛</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="/#latest-updates">最新赛况</a>
+        <a href="/#featured">今日精选</a>
+        <a href="/#categories">分类入口</a>
+        <a href="/#deep-dive">深度解析</a>
+        <a href="/#faq">常见问答</a>
+        <a href="/#comments">吃瓜评论</a>
+      </nav>
+      <div class="header-actions">
+        <button class="search-btn" id="searchToggle" aria-label="搜索当前页面内容">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 L14 14" stroke-linecap="round"/></svg>
+          搜索
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== 页面主体 ========== -->
+  <div class="page-wrap" id="top">
+
+    <!-- ---------- 左频道索引 ---------- -->
+    <aside class="channel-sidebar" aria-label="频道索引">
+      <nav class="channel-nav">
+        <h3>赛事频道</h3>
+        <ul>
+          <li><a href="/#latest-updates" class="active">实时赛况</a></li>
+          <li><a href="/#featured">今日精选</a></li>
+          <li><a href="/#categories">分类入口</a></li>
+          <li><a href="/#deep-dive">深度解析</a></li>
+          <li><a href="/#guide">吃瓜指南</a></li>
+          <li><a href="/#faq">常见问答</a></li>
+          <li><a href="/#comments">吃瓜评论</a></li>
+          <li><a href="/#news">相关资讯</a></li>
+          <li><a href="/#ranking-timeline">热榜时间线</a></li>
+          <li><a href="/#related">延伸推荐</a></li>
+        </ul>
+        <div class="channel-footer">
+          今日收录 24 条热议
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ---------- 中栏主内容 ---------- -->
+    <main class="main-content">
+
+      <!-- 首屏 -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-content">
+          <span class="hero-badge">⚡ 今日焦点 · 11 月 8 日</span>
+          <h1 id="hero-title">吃瓜推特大赛</h1>
+          <p>聚合推特上最热门的争议事件、搞笑翻车和神回复现场。这里汇集了“地铁判官”续集、深夜食堂账单大战、AI 伪造聊天记录翻车等今日高热度名场面，按争议指数和吃瓜热度实时整理。</p>
+          <div class="hero-actions">
+            <a href="/#featured" class="btn-primary">查看今日精选 →</a>
+            <a href="/#latest-updates" class="btn-outline">最新赛况</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="40" width="160" height="100" rx="12" fill="#fff" stroke="#e6dfd6" stroke-width="1.5"/>
+            <rect x="20" y="40" width="160" height="30" rx="12" fill="#fdf6f4"/>
+            <circle cx="42" cy="55" r="4" fill="#b44a3c"/>
+            <circle cx="58" cy="55" r="4" fill="#e6b422"/>
+            <circle cx="74" cy="55" r="4" fill="#f0d8d4"/>
+            <rect x="36" y="82" width="60" height="8" rx="4" fill="#f0ebe4"/>
+            <rect x="36" y="98" width="100" height="8" rx="4" fill="#f0ebe4"/>
+            <rect x="36" y="114" width="80" height="8" rx="4" fill="#f0ebe4"/>
+            <circle cx="160" cy="90" r="18" fill="#fdf6e3" stroke="#e6b422" stroke-width="2"/>
+            <text x="160" y="96" text-anchor="middle" font-size="16" fill="#b44a3c" font-weight="bold">🍉</text>
+            <path d="M130 140 L150 120 L165 135" stroke="#b44a3c" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <circle cx="150" cy="120" r="3" fill="#b44a3c"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- 1. 主题领域概览 -->
+      <section class="section" id="overview">
+        <div class="section-header">
+          <h2>吃瓜推特大赛 · 领域概览</h2>
+        </div>
+        <div class="intro-text">
+          <p>“吃瓜推特大赛”并非正式赛事，而是网友对推特上高频发生的争议事件、搞笑翻车和神回复现场的一种戏称。这里的“参赛作品”包括：<strong>地铁判官系列</strong>——从 10 月底延续至今的公共场合冲突短视频；<strong>深夜食堂账单大战</strong>——网友晒出离谱账单后引发的连锁吐槽；<strong>AI 伪造聊天记录翻车</strong>——用 AI 生成“内部爆料”被识破的尴尬现场；<strong>评论区神回复</strong>——单条回复点赞超过原帖的经典案例。这些内容有一个共同点：爆发快、反转多、围观群众参与度高。</p>
+          <p>当前值得关注的细分方向包括：<strong>现场视频类</strong>（如“地铁判官”续集、“商场插队争执”）、<strong>文字截图类</strong>（如“深夜食堂账单”）、<strong>AI 翻车类</strong>（如“伪造聊天记录”）、<strong>官方回应类</strong>（如“平台封号公告”）以及<strong>二次创作类</strong>（如“鬼畜剪辑”“表情包大战”）。每个方向都有对应的吃瓜节奏：视频类看反转，截图类看后续，AI 类看打脸。</p>
+        </div>
+      </section>
+
+      <!-- 2. 精选内容推荐 -->
+      <section class="section" id="featured">
+        <div class="section-header">
+          <h2>今日精选 · 吃瓜推特大赛热门条目 <span class="count">8 条</span></h2>
+          <a href="/#latest-updates" class="more-link">查看实时赛况</a>
+        </div>
+        <div class="card-grid">
+          <!-- 卡片 1 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/ditie-panguan01/400/300" alt="地铁判官续集现场画面" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">现场视频</span>
+              <h3 class="card-title">地铁判官续集：上海 9 号线“让座争议”完整版</h3>
+              <p class="card-desc">11 月 7 日晚高峰，一名乘客因让座问题与老人发生争执，全程被对面乘客拍下。视频中“判官”式旁白成为新梗，评论区已出现多个方言配音版本。</p>
+              <div class="tag-row">
+                <span class="tag">让座争议</span>
+                <span class="tag">现场反转</span>
+                <span class="tag">方言配音</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 98.2 万</span>
+                <span>💬 1.2 万条讨论</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 卡片 2 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/shenye-shitang02/400/300" alt="深夜食堂账单截图" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">文字截图</span>
+              <h3 class="card-title">深夜食堂 1280 元账单：老板回应“明码标价”</h3>
+              <p class="card-desc">网友晒出在“深夜食堂”就餐的账单，其中“拍黄瓜 68 元”引发热议。老板随后在推特发布菜单照片回应，但被眼尖网友发现部分价格标签有涂改痕迹。</p>
+              <div class="tag-row">
+                <span class="tag">离谱账单</span>
+                <span class="tag">老板回应</span>
+                <span class="tag">价格标签</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 87.5 万</span>
+                <span>💬 9800 条讨论</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 卡片 3 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/ai-fake-chat03/400/300" alt="AI伪造聊天记录翻车截图" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">AI 翻车</span>
+              <h3 class="card-title">AI 伪造“内部聊天记录”被识破：字体不对</h3>
+              <p class="card-desc">一位用户声称获得某公司“内部群聊截图”，但被设计师指出截图中的字体并非企业微信默认字体，且时间戳格式有误。该用户随后删除推文并注销账号。</p>
+              <div class="tag-row">
+                <span class="tag">AI 造假</span>
+                <span class="tag">字体破绽</span>
+                <span class="tag">删号跑路</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 76.9 万</span>
+                <span>💬 6700 条讨论</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 卡片 4 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/shenhuifu04/400/300" alt="评论区神回复截图" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">神回复</span>
+              <h3 class="card-title">“你猜我为什么半夜发推” · 凌晨三点的神回复</h3>
+              <p class="card-desc">一位用户凌晨发推抱怨失眠，评论区出现“因为白天睡够了”的回复，点赞数在 2 小时内超过原帖 5 倍。后续衍生出“你猜我为什么…”句式接龙。</p>
+              <div class="tag-row">
+                <span class="tag">失眠梗</span>
+                <span class="tag">接龙</span>
+                <span class="tag">点赞反超</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 72.3 万</span>
+                <span>💬 5400 条讨论</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 卡片 5 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/shangchang-chadui05/400/300" alt="商场插队争执现场" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">现场视频</span>
+              <h3 class="card-title">商场插队争执：一句“我赶时间”引全场侧目</h3>
+              <p class="card-desc">11 月 6 日，某商场奶茶店前一名顾客以“赶时间”为由插队，被后排顾客集体要求重新排队。视频中插队者的理由是“我买了电影票”，引发关于“赶时间是否构成插队理由”的讨论。</p>
+              <div class="tag-row">
+                <span class="tag">插队争议</span>
+                <span class="tag">公共秩序</span>
+                <span class="tag">电影票理由</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 65.8 万</span>
+                <span>💬 4300 条讨论</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 卡片 6 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/pingtaifeng06/400/300" alt="平台封号公告截图" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">官方回应</span>
+              <h3 class="card-title">平台封禁“地铁判官”系列搬运账号：12 个号同日消失</h3>
+              <p class="card-desc">推特上一个专门搬运“地铁判官”系列视频的账号矩阵被批量封禁，页面显示“违反平台规则”。有网友猜测与版权投诉有关，也有声音认为与内容真实性审核有关。</p>
+              <div class="tag-row">
+                <span class="tag">批量封号</span>
+                <span class="tag">搬运矩阵</span>
+                <span class="tag">平台规则</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 58.1 万</span>
+                <span>💬 3900 条讨论</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 卡片 7 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/douyin-biaoqing07/400/300" alt="表情包大战截图" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">二次创作</span>
+              <h3 class="card-title">“地铁判官”表情包大战：已经出现 40 多个版本</h3>
+              <p class="card-desc">从最初的视频截图到 Q 版手绘、像素风、甚至毛绒玩具实物，网友围绕“地铁判官”形象创作了超过 40 种表情包变体。其中“我来判”系列在聊天软件中传播最广。</p>
+              <div class="tag-row">
+                <span class="tag">表情包</span>
+                <span class="tag">二创</span>
+                <span class="tag">Q 版手绘</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 52.4 万</span>
+                <span>💬 3100 条讨论</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 卡片 8 -->
+          <article class="card">
+            <img class="card-img" src="https://picsum.photos/seed/guichu-jianji08/400/300" alt="鬼畜剪辑视频画面" width="400" height="300" loading="lazy">
+            <div class="card-body">
+              <span class="card-type">鬼畜剪辑</span>
+              <h3 class="card-title">“深夜食堂账单”鬼畜版：把老板回应剪成了 Rap</h3>
+              <p class="card-desc">一位 UP 主将老板的回应音频重新混音，配以账单数字跳动的视觉效果，制作了一段 90 秒的鬼畜视频。歌词中“拍黄瓜 68”成为洗脑副歌，转发量已破 8000。</p>
+              <div class="tag-row">
+                <span class="tag">鬼畜混音</span>
+                <span class="tag">Rap 版</span>
+                <span class="tag">洗脑副歌</span>
+              </div>
+              <div class="card-meta">
+                <span>🔥 热度 48.7 万</span>
+                <span>💬 2700 条讨论</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3. 最新更新 / 热播 / 动态 -->
+      <section class="section" id="latest-updates">
+        <div class="section-header">
+          <h2>实时赛况 · 最新更新 <span class="count">10 条</span></h2>
+        </div>
+        <div class="update-list">
+          <div class="update-item">
+            <span class="update-time">今天 14:30</span>
+            <div class="update-content">
+              <div class="update-title">“地铁判官”续集新增第 3 个视角视频 <span class="update-badge">新</span></div>
+              <div class="update-desc">从车厢另一侧拍摄的完整版被上传，显示争执前双方已有口角，评论区开始重新评估“谁先挑事”。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">今天 13:15</span>
+            <div class="update-content">
+              <div class="update-title">深夜食堂老板发布第二版菜单照片</div>
+              <div class="update-desc">新照片中“拍黄瓜”价格被修正为 38 元，但网友发现背景中的日历日期与第一版不一致。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">今天 11:40</span>
+            <div class="update-content">
+              <div class="update-title">AI 伪造聊天记录事件出现“受害者”</div>
+              <div class="update-desc">被伪造记录涉及的公司员工发推澄清，表示已向平台举报，并附上真实工作群截图对比。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">今天 10:05</span>
+            <div class="update-content">
+              <div class="update-title">“你猜我为什么…”接龙突破 5000 条 <span class="update-badge">热</span></div>
+              <div class="update-desc">新加入的回复包括“你猜我为什么周末起这么早”“你猜我为什么点开这条推文”等变体。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">昨天 22:18</span>
+            <div class="update-content">
+              <div class="update-title">商场插队争执视频出现完整 5 分钟版</div>
+              <div class="update-desc">此前传播的 47 秒片段被指“掐头去尾”，完整版显示插队者曾询问过前排顾客。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">昨天 20:45</span>
+            <div class="update-content">
+              <div class="update-title">“地铁判官”表情包实物化：毛绒玩具众筹上线</div>
+              <div class="update-desc">一位网友发起“判官毛绒”众筹，目标 500 件，3 小时内达成 200%。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">昨天 18:30</span>
+            <div class="update-content">
+              <div class="update-title">封号事件后续：部分搬运账号转为私密</div>
+              <div class="update-desc">未被封禁的同类账号从公开转为私密状态，部分账号在简介中注明“内容仅供存档”。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">11 月 6 日 21:10</span>
+            <div class="update-content">
+              <div class="update-title">鬼畜版“深夜食堂账单”登上热门音频榜</div>
+              <div class="update-desc">该 Rap 片段在推特音频功能中被使用超过 1.2 万次，成为本周上升最快的音频。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">11 月 6 日 16:20</span>
+            <div class="update-content">
+              <div class="update-title">“地铁判官”方言配音扩展到 8 种</div>
+              <div class="update-desc">新增东北话、四川话、粤语、闽南语版本，其中四川话版单条播放量破 300 万。</div>
+            </div>
+          </div>
+          <div class="update-item">
+            <span class="update-time">11 月 5 日 12:00</span>
+            <div class="update-content">
+              <div class="update-title">平台发布“争议内容”处理规则更新公告</div>
+              <div class="update-desc">公告提到将对“未经核实的社会事件视频”增加事实核查标签，但未明确执行时间表。</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. 分类入口 -->
+      <section class="section" id="categories">
+        <div class="section-header">
+          <h2>分类入口 · 按类型找瓜</h2>
+        </div>
+        <div class="category-grid">
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">🎬</span>
+            <span class="cat-name">现场视频</span>
+            <span class="cat-count">12 条</span>
+          </a>
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">📸</span>
+            <span class="cat-name">文字截图</span>
+            <span class="cat-count">9 条</span>
+          </a>
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">🤖</span>
+            <span class="cat-name">AI 翻车</span>
+            <span class="cat-count">5 条</span>
+          </a>
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">💬</span>
+            <span class="cat-name">神回复</span>
+            <span class="cat-count">14 条</span>
+          </a>
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">📢</span>
+            <span class="cat-name">官方回应</span>
+            <span class="cat-count">7 条</span>
+          </a>
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">🎨</span>
+            <span class="cat-name">二次创作</span>
+            <span class="cat-count">11 条</span>
+          </a>
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">🔊</span>
+            <span class="cat-name">鬼畜剪辑</span>
+            <span class="cat-count">6 条</span>
+          </a>
+          <a href="/#featured" class="category-item">
+            <span class="cat-icon">⚖️</span>
+            <span class="cat-name">争议判官</span>
+            <span class="cat-count">8 条</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 5. 深度解析正文 -->
+      <section class="section" id="deep-dive">
+        <div class="section-header">
+          <h2>深度解析 · 吃瓜推特大赛的类型差异与判断维度</h2>
+        </div>
+        <div class="deep-dive">
+          <h3>现场视频类：反转密度决定热度上限</h3>
+          <p>以“地铁判官”系列为例，这类内容的核心看点不在于冲突本身，而在于<strong>多视角反转</strong>。第一个视频往往只呈现一方视角，引发同情或愤怒；随后出现的完整版、对面视角、甚至当事人自述，会不断修正观众的判断。判断一个现场视频值不值得追，可以看三个指标：<strong>是否有第二个视角</strong>、<strong>是否有当事人回应</strong>、<strong>是否有时间戳或地点信息</strong>。三个都有的，通常能持续热三天以上；只有一个的，往往在 24 小时内热度就断崖下跌。</p>
+          <h3>文字截图类：细节破绽是二次传播的燃料</h3>
+          <p>“深夜食堂账单”和“AI 伪造聊天记录”都属于文字截图类。这类内容的特点是<strong>门槛低、传播快、打脸也快</strong>。一张截图发出来，前 2 小时是情绪主导，4 小时后开始出现“列文虎克”式网友逐帧检查。判断一张截图的可信度，可以优先看：<strong>字体是否统一</strong>（不同设备默认字体不同）、<strong>时间戳格式是否合理</strong>（24 小时制与 12 小时制混用往往有问题）、<strong>界面元素是否完整</strong>（信号栏、电量、导航栏）。很多翻车案例都是因为截图者忽略了一个像素级的细节。</p>
+          <h3>神回复类：点赞反超是核心指标</h3>
+          <p>评论区神回复的“赛制”很简单：<strong>点赞数超过原帖</strong>就是胜利。典型的如“你猜我为什么半夜发推”下面的“因为白天睡够了”，2 小时内点赞数达到原帖的 5 倍。这类内容的判断标准相对主观，但有几个规律可循：回复越短越容易传播；带具体场景的比抽象玩梗的更容易被截图转发；能衍生出接龙句式的，生命周期最长。如果你在时间线上看到一条回复的点赞数明显高于原帖，基本可以判断它已经进入“大赛”的决赛圈。</p>
+          <h3>AI 翻车类：伪造成本越低，翻车越快</h3>
+          <p>AI 伪造聊天记录、AI 生成“内部文件”、AI 合成语音，这三类是目前最常见的翻车方向。它们的共同点是<strong>制作门槛低，但验证门槛更低</strong>。AI 生成的聊天记录经常在字体渲染上露出马脚，尤其是中英文混排时的字重不一致。AI 语音则容易在语气词和呼吸节奏上出现机械感。判断一个“爆料”是否 AI 生成，可以注意：<strong>消息气泡的圆角是否统一</strong>、<strong>头像与昵称的对齐方式</strong>、<strong>输入框的占位符文字</strong>。目前已知的翻车案例中，超过六成是因为输入框占位符写错了。</p>
+          <h3>官方回应类：措辞变化比内容本身更有信息量</h3>
+          <p>平台封号公告、商家回应、当事人声明，这类内容的价值往往不在“说了什么”，而在“怎么说的”。例如封禁“地铁判官”搬运账号时，平台使用的措辞是“违反平台规则”而非“侵权”，这暗示处理原因可能涉及内容真实性审核而非版权。再比如深夜食堂老板的两次回应：第一次说“明码标价”，第二次改口“价格录入错误”，措辞从强硬转向解释，说明压力点发生了变化。追踪官方回应时，可以对比同一主体在不同时间段的用词差异，这比回应本身更能说明问题。</p>
+        </div>
+      </section>
+
+      <!-- 6. 体验指南 / 消费路径 -->
+      <section class="section" id="guide">
+        <div class="section-header">
+          <h2>吃瓜指南 · 怎么高效跟上一场推特大赛</h2>
+        </div>
+        <div class="guide-steps">
+          <div class="guide-step">
+            <h4>先看“多视角”标签，再决定是否投入时间</h4>
+            <p>一条现场视频如果只有单一视角，大概率会在几小时内被反转。优先选择带有“完整版”“对面视角”“当事人回应”标签的条目，能省去追更的精力。</p>
+          </div>
+          <div class="guide-step">
+            <h4>截图类先找“列文虎克”评论</h4>
+            <p>文字截图类内容的评论区通常比正文更精彩。直接按“最新”排序，找那些指出字体、时间戳、界面细节问题的回复，基本能在 3 分钟内判断这张截图是否可信。</p>
+          </div>
+          <div class="guide-step">
+            <h4>神回复看点赞数是否反超原帖</h4>
+            <p>点赞数超过原帖的回复，通常已经经过一轮“群众筛选”，质量相对有保证。反超倍数越高，说明共鸣越强，衍生接龙的概率也越大。</p>
+          </div>
+          <div class="guide-step">
+            <h4>AI 翻车类直接跳到最后一张图</h4>
+            <p>AI 伪造截图往往在最后一张或多张图的细节处露出破绽。直接滑到末尾看输入框、头像、时间戳，比从头逐字阅读效率高得多。</p>
+          </div>
+          <div class="guide-step">
+            <h4>官方回应对比“上一版”措辞</h4>
+            <p>同一个主体的多次回应，建议新旧对照阅读。措辞从“严正声明”变为“说明情况”，或从“追究责任”变为“加强沟通”，往往暗示了实际压力的来源。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. FAQ -->
+      <section class="section" id="faq">
+        <div class="section-header">
+          <h2>常见问答 · 吃瓜推特大赛</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>“地铁判官”系列一般多久更新一次？</summary>
+            <div class="faq-answer">没有固定更新频率。这类内容取决于是否出现新的现场视频或当事人回应。目前“地铁判官”系列从 10 月底持续至今，平均每 2—3 天会出现一个可独立传播的新片段。如果连续 5 天没有新视角，基本可以判断热度进入尾声。</div>
+          </details>
+          <details>
+            <summary>“深夜食堂账单”和普通消费投诉有什么区别？</summary>
+            <div class="faq-answer">普通消费投诉通常走平台投诉或 12315 渠道，而“深夜食堂账单”之所以成为推特大赛条目，是因为它具备三个要素：账单本身有记忆点（拍黄瓜 68 元）、商家回应有破绽（菜单照片被指涂改）、网友二次创作活跃（鬼畜视频、表情包）。缺一个要素，传播力就会大幅下降。</div>
+          </details>
+          <details>
+            <summary>第一次围观推特大赛，从哪个条目开始看比较好？</summary>
+            <div class="faq-answer">建议从“神回复”类开始。这类条目单条阅读时间短（通常不到 1 分钟），不需要追前因后果，且点赞数已经帮你做了筛选。看完几条神回复后，再决定是否深入“现场视频”或“文字截图”这类需要更多时间投入的条目。</div>
+          </details>
+          <details>
+            <summary>如何判断一张推特截图是不是 AI 生成的？</summary>
+            <div class="faq-answer">重点看四个地方：一是消息气泡的圆角是否一致（AI 经常在边角处模糊）；二是输入框占位符文字是否正确（很多 AI 会写成“输入消息…”但真实客户端通常写“发消息”）；三是时间戳格式是否统一（24 小时制与 12 小时制混用是常见破绽）；四是头像与昵称的对齐方式（AI 生成的截图往往有 1—2 像素的偏移）。</div>
+          </details>
+          <details>
+            <summary>官方封号公告里的“违反平台规则”通常指什么？</summary>
+            <div class="faq-answer">这个措辞比较模糊，可能涵盖版权投诉、内容真实性审核、批量操作、骚扰行为等多种情况。判断具体原因，可以看同一批被封账号的共同点：如果都是搬运同一系列视频，版权问题的概率较高；如果都涉及某类争议事件，则更可能与内容审核相关。平台通常不会在公告中说明具体条款。</div>
+          </details>
+          <details>
+            <summary>“吃瓜推特大赛”里的条目会一直保留吗？</summary>
+            <div class="faq-answer">不会。大部分条目在原帖删除、账号封禁或热度消退后会逐渐从时间线上消失。一些二次创作内容（如表情包、鬼畜视频）可能存活更久，但原始截图和视频往往在 1—2 周内就难以找到完整版本。如果想留存，建议在热度高峰期保存截图或视频。</div>
+          </details>
+        </div>
+      </section>
+
+      <!-- 8. 用户评论 -->
+      <section class="section" id="comments">
+        <div class="section-header">
+          <h2>吃瓜评论 · 网友怎么说 <span class="count">14 条</span></h2>
+        </div>
+        <div class="comment-grid">
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">瓜</div>
+              <span class="comment-name">瓜田里的猹</span>
+              <span class="comment-time">今天 14:52</span>
+            </div>
+            <p class="comment-text">地铁判官续集那个对面视角一出来，风向完全变了。之前骂老人的现在开始骂年轻人，<strong>反转来得太快</strong>。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">吃</div>
+              <span class="comment-name">吃瓜不吐皮</span>
+              <span class="comment-time">今天 14:20</span>
+            </div>
+            <p class="comment-text">深夜食堂老板第二次发的照片，背景日历是 2025 年的，这操作太迷惑了。不过拍黄瓜 38 元也还是贵。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">路</div>
+              <span class="comment-name">路过打酱油</span>
+              <span class="comment-time">今天 13:45</span>
+            </div>
+            <p class="comment-text">AI 伪造聊天记录那个，我一眼就看出来字体不对。企业微信的默认字体不是那样的，太假了。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">半</div>
+              <span class="comment-name">半夜刷推</span>
+              <span class="comment-time">今天 12:30</span>
+            </div>
+            <p class="comment-text">“你猜我为什么半夜发推”下面那条回复真的神了，<strong>因为白天睡够了</strong>，六个字完胜。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">中</div>
+              <span class="comment-name">中立看客</span>
+              <span class="comment-time">今天 11:18</span>
+            </div>
+            <p class="comment-text">商场插队那个完整版看完，其实插队的人问过前面的人，只是声音太小没被拍到。不过赶时间确实不是理由。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">表</div>
+              <span class="comment-name">表情包仓库</span>
+              <span class="comment-time">今天 10:40</span>
+            </div>
+            <p class="comment-text">已经收藏了 12 个版本的判官表情包，毛绒玩具众筹我也参与了，希望别鸽。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">鬼</div>
+              <span class="comment-name">鬼畜区常驻</span>
+              <span class="comment-time">昨天 23:05</span>
+            </div>
+            <p class="comment-text">深夜食堂那个 Rap 版质量真的高，副歌部分“拍黄瓜六十八”已经在我脑子里循环一天了。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">封</div>
+              <span class="comment-name">封号观察员</span>
+              <span class="comment-time">昨天 21:50</span>
+            </div>
+            <p class="comment-text">12 个搬运号同日消失，这规模不像是版权投诉，更像是批量内容审核。不过平台也没说清楚。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">方</div>
+              <span class="comment-name">方言收集者</span>
+              <span class="comment-time">昨天 20:15</span>
+            </div>
+            <p class="comment-text">四川话配音版最搞笑，“你搞啥子嘛”那句配得比原声还有味道。闽南语版还没找到。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">截</div>
+              <span class="comment-name">截图侦探</span>
+              <span class="comment-time">11 月 6 日 22:30</span>
+            </div>
+            <p class="comment-text">AI 伪造聊天记录的那个输入框占位符写的是“输入消息…”，真实客户端应该是“发消息”，这个破绽太明显了。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">吃</div>
+              <span class="comment-name">吃瓜群众 A</span>
+              <span class="comment-time">11 月 6 日 19:00</span>
+            </div>
+            <p class="comment-text">感觉推特大赛每天都有新素材，根本追不完。我现在只看“多视角”标签的，省时间。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">冷</div>
+              <span class="comment-name">冷静分析</span>
+              <span class="comment-time">11 月 6 日 15:45</span>
+            </div>
+            <p class="comment-text">其实商家回应里那句“价格录入错误”已经算承认问题了，比硬扛着不认好。不过第二次照片的日历确实不应该。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">吐</div>
+              <span class="comment-name">吐槽小号</span>
+              <span class="comment-time">11 月 5 日 21:20</span>
+            </div>
+            <p class="comment-text">地铁判官那个毛绒玩具众筹 3 小时就 200% 了，我犹豫了一下就没了。希望有第二批。</p>
+          </div>
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-avatar">时</div>
+              <span class="comment-name">时间线选手</span>
+              <span class="comment-time">11 月 5 日 18:10</span>
+            </div>
+            <p class="comment-text">建议把“神回复”和“现场视频”分开刷。神回复适合碎片时间，现场视频需要整块时间，混着看容易断片。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. 相关资讯 -->
+      <section class="section" id="news">
+        <div class="section-header">
+          <h2>相关资讯 · 推特大赛动态</h2>
+        </div>
+        <div class="news-grid">
+          <article class="news-item">
+            <span class="news-date">2026-11-08</span>
+            <h3 class="news-title">“地铁判官”系列新增多视角视频</h3>
+            <p class="news-summary">11 月 8 日上午，从车厢另一侧拍摄的完整版视频被上传，显示争执前双方已有约 40 秒的口头交锋，与首版视频呈现的“单方面发难”有所不同。</p>
+          </article>
+          <article class="news-item">
+            <span class="news-date">2026-11-07</span>
+            <h3 class="news-title">深夜食堂老板发布第二版菜单照片</h3>
+            <p class="news-summary">新照片中“拍黄瓜”价格被修正为 38 元，但背景日历显示为 2025 年，与店铺实际经营时间不符，引发新一轮讨论。</p>
+          </article>
+          <article class="news-item">
+            <span class="news-date">2026-11-06</span>
+            <h3 class="news-title">平台封禁 12 个“地铁判官”搬运账号</h3>
+            <p class="news-summary">推特上一个专门搬运该系列视频的账号矩阵被批量封禁，页面显示“违反平台规则”。有网友推测与版权投诉有关，也有声音认为涉及内容真实性审核。</p>
+          </article>
+          <article class="news-item">
+            <span class="news-date">2026-11-05</span>
+            <h3 class="news-title">“你猜我为什么…”接龙突破 5000 条</h3>
+            <p class="news-summary">起源于一条凌晨失眠推文的接龙句式，在 48 小时内衍生出超过 5000 条变体回复，成为本周增长最快的文字类互动。</p>
+          </article>
+          <article class="news-item">
+            <span class="news-date">2026-11-04</span>
+            <h3 class="news-title">鬼畜版“深夜食堂账单”登上热门音频榜</h3>
+            <p class="news-summary">将商家回应混音制作的 Rap 片段在推特音频功能中被使用超过 1.2 万次，其中“拍黄瓜六十八”成为洗脑副歌。</p>
+          </article>
+          <article class="news-item">
+            <span class="news-date">2026-11-03</span>
+            <h3 class="news-title">“地铁判官”方言配音扩展到 8 种</h3>
+            <p class="news-summary">东北话、四川话、粤语、闽南语等方言版本陆续出现，其中四川话版单条播放量突破 300 万，成为方言配音中最受欢迎的一版。</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 10. 相关推荐 -->
+      <section class="section" id="related">
+        <div class="section-header">
+          <h2>延伸推荐 · 你可能还想关注</h2>
+        </div>
+        <div class="related-tags">
+          <a href="/#featured">多视角现场视频合集</a>
+          <a href="/#featured">AI 伪造截图鉴别方法</a>
+          <a href="/#featured">评论区神回复集锦</a>
+          <a href="/#featured">方言配音版判官</a>
+          <a href="/#featured">鬼畜剪辑入门指南</a>
+          <a href="/#featured">官方回应措辞对比</a>
+          <a href="/#featured">表情包二创趋势</a>
+        </div>
+      </section>
+
+      <!-- 11. 补充板块：热门榜单 / 时间线 -->
+      <section class="section" id="ranking-timeline">
+        <div class="section-header">
+          <h2>热榜时间线 · 近七日大赛焦点</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2026-11-08</div>
+            <div class="timeline-title">“地铁判官”续集多视角视频出现</div>
+            <div class="timeline-desc">反转密度：高 · 当前热度：98.2 万</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026-11-07</div>
+            <div class="timeline-title">深夜食堂账单老板二次回应</div>
+            <div class="timeline-desc">反转密度：中 · 当前热度：87.5 万</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026-11-06</div>
+            <div class="timeline-title">AI 伪造聊天记录被识破</div>
+            <div class="timeline-desc">反转密度：低（一次性打脸）· 当前热度：76.9 万</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026-11-05</div>
+            <div class="timeline-title">“你猜我为什么…”接龙爆发</div>
+            <div class="timeline-desc">反转密度：无（纯互动）· 当前热度：72.3 万</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026-11-04</div>
+            <div class="timeline-title">鬼畜版账单 Rap 登榜</div>
+            <div class="timeline-desc">反转密度：无（二创）· 当前热度：48.7 万</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026-11-03</div>
+            <div class="timeline-title">方言配音扩展到 8 种</div>
+            <div class="timeline-desc">反转密度：无（二创）· 当前热度：52.4 万</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2026-11-02</div>
+            <div class="timeline-title">平台批量封禁搬运账号</div>
+            <div class="timeline-desc">反转密度：中（官方介入）· 当前热度：58.1 万</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ---------- 右辅助栏 ---------- -->
+    <aside class="aux-sidebar" aria-label="辅助信息">
+      <div class="aux-card">
+        <h3><span class="emoji">🔥</span> 热度榜 · 今日前十</h3>
+        <ul class="hot-list">
+          <li><span class="rank top">1</span><span class="item-name">地铁判官续集</span><span class="hot-value">98.2 万</span></li>
+          <li><span class="rank top">2</span><span class="item-name">深夜食堂账单</span><span class="hot-value">87.5 万</span></li>
+          <li><span class="rank top">3</span><span class="item-name">AI 伪造聊天记录</span><span class="hot-value">76.9 万</span></li>
+          <li><span class="rank">4</span><span class="item-name">你猜我为什么接龙</span><span class="hot-value">72.3 万</span></li>
+          <li><span class="rank">5</span><span class="item-name">商场插队完整版</span><span class="hot-value">65.8 万</span></li>
+          <li><span class="rank">6</span><span class="item-name">平台封号事件</span><span class="hot-value">58.1 万</span></li>
+          <li><span class="rank">7</span><span class="item-name">判官表情包实物化</span><span class="hot-value">52.4 万</span></li>
+          <li><span class="rank">8</span><span class="item-name">账单鬼畜 Rap</span><span class="hot-value">48.7 万</span></li>
+          <li><span class="rank">9</span><span class="item-name">方言配音 8 种</span><span class="hot-value">43.2 万</span></li>
+          <li><span class="rank">10</span><span class="item-name">判官毛绒众筹</span><span class="hot-value">38.6 万</span></li>
+        </ul>
+      </div>
+      <div class="aux-card">
+        <h3><span class="emoji">⏱</span> 实时更新流</h3>
+        <ul class="update-stream">
+          <li><span class="time">14:52</span> 地铁判官续集新增第 3 个视角</li>
+          <li><span class="time">14:20</span> 深夜食堂老板发布第二版菜单</li>
+          <li><span class="time">13:45</span> AI 伪造记录事件出现当事人回应</li>
+          <li><span class="time">12:30</span> “你猜我为什么”接龙破 5000 条</li>
+          <li><span class="time">11:18</span> 商场插队完整版放出</li>
+          <li><span class="time">10:40</span> 判官毛绒众筹达成 200%</li>
+          <li><span class="time">昨天 23:05</span> 鬼畜 Rap 登热门音频榜</li>
+          <li><span class="time">昨天 21:50</span> 封号事件后续：部分账号转私密</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ========== 页脚 ========== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-text">吃瓜推特<span>大赛</span></span>
+        <p>聚合推特上最热门的争议事件、搞笑翻车和神回复现场，按争议指数和吃瓜热度整理，适合想快速跟上网络热点节奏的网友。</p>
+      </div>
+      <div class="footer-col">
+        <h4>赛事频道</h4>
+        <ul>
+          <li><a href="/#latest-updates">实时赛况</a></li>
+          <li><a href="/#featured">今日精选</a></li>
+          <li><a href="/#categories">分类入口</a></li>
+          <li><a href="/#deep-dive">深度解析</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>围观指南</h4>
+        <ul>
+          <li><a href="/#guide">吃瓜指南</a></li>
+          <li><a href="/#faq">常见问答</a></li>
+          <li><a href="/#comments">吃瓜评论</a></li>
+          <li><a href="/#news">相关资讯</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>延伸关注</h4>
+        <ul>
+          <li><a href="/#related">延伸推荐</a></li>
+          <li><a href="/#ranking-timeline">热榜时间线</a></li>
+          <li><a href="/#overview">领域概览</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 吃瓜推特大赛 · 内容聚合示例页面</span>
+      <span>部分内容为示例数据，仅用于展示页面结构</span>
+    </div>
+  </footer>
+
+  <!-- 内联脚本：搜索筛选（轻量） -->
+  <script>
+    (function() {
+      var searchBtn = document.getElementById('searchToggle');
+      var searchInput = null;
+      var noResultEl = null;
+      var searchActive = false;
+
+      function createSearchUI() {
+        var headerActions = document.querySelector('.header-actions');
+        if (!headerActions) return;
+
+        searchInput = document.createElement('input');
+        searchInput.type = 'search';
+        searchInput.placeholder = '搜索条目、关键词…';
+        searchInput.setAttribute('aria-label', '搜索页面内容');
+        searchInput.style.cssText = 'padding:6px 14px;border:1px solid #e6dfd6;border-radius:24px;font-size:13px;width:180px;outline:none;background:#fefcf9;transition:border-color .2s;';
+        searchInput.addEventListener('focus', function() { this.style.borderColor = '#b44a3c'; });
+        searchInput.addEventListener('blur', function() { if (!this.value) this.style.borderColor = '#e6dfd6'; });
+        searchInput.addEventListener('input', doSearch);
+
+        searchBtn.replaceWith(searchInput);
+        searchInput.focus();
+
+        noResultEl = document.createElement('div');
+        noResultEl.className = 'no-result';
+        noResultEl.textContent = '没有找到匹配的条目，换个关键词试试。';
+        var main = document.querySelector('.main-content');
+        if (main) {
+          main.insertBefore(noResultEl, main.firstChild);
+        }
+      }
+
+      function doSearch() {
+        var query = searchInput.value.trim().toLowerCase();
+        var cards = document.querySelectorAll('.card, .update-item, .comment-card, .news-item, .category-item, .guide-step, .faq-list details, .timeline-item, .related-tags a');
+        var visibleCount = 0;
+
+        if (!query) {
+          cards.forEach(function(el) { el.classList.remove('hidden-by-search'); });
+          if (noResultEl) noResultEl.classList.remove('show');
+          return;
+        }
+
+        cards.forEach(function(el) {
+          var text = (el.textContent || '').toLowerCase();
+          if (text.indexOf(query) !== -1) {
+            el.classList.remove('hidden-by-search');
+            visibleCount++;
+          } else {
+            el.classList.add('hidden-by-search');
+          }
+        });
+
+        if (noResultEl) {
+          if (visibleCount === 0) {
+            noResultEl.classList.add('show');
+          } else {
+            noResultEl.classList.remove('show');
+          }
+        }
+      }
+
+      searchBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!searchActive) {
+          createSearchUI();
+          searchActive = true;
+        }
+      });
+
+      searchBtn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (!searchActive) {
+            createSearchUI();
+            searchActive = true;
+          }
+        }
+      });
+    })();
+  </script>
+
+</body>
+                </html>
